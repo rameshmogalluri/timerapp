@@ -1,0 +1,7 @@
+May 05, 2018 1:34:28 PM java.util.prefs.WindowsPreferences <init>
+WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.
+2018-05-05 13:34:28.444:INFO::main: Logging initialized @713ms
+
+************************************************
+Could not open the requested socket: Address already in use: bind
+Try overriding --address and/or --port.
