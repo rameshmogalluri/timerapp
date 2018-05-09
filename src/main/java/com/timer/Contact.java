@@ -4,6 +4,7 @@ package com.timer;
 
 import java.io.Serializable;
 
+import com.google.appengine.api.blobstore.BlobKey;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -26,6 +27,9 @@ public class Contact implements Serializable {
    private String address;
    @Index
    private Boolean active;
+   
+   private BlobKey key;
+   
    public Contact() {}
    public Contact(String name,String mobileNumber,String address)
      {
@@ -43,9 +47,13 @@ public class Contact implements Serializable {
        this.mobileNumber = mobileNumber;
        this.address=address;
        this.password = password;
+       this.key=null;
        this.active=true;
      }
-    
+    public void setKey(BlobKey key)
+    {
+    	this.key=key;
+    }
     public String getAddress() {
 		return address;
 	}
