@@ -1,0 +1,23 @@
+@charset "ISO-8859-1";
+.top{
+	height:100px;
+	background: #000;
+}
+.middle{
+	font-size: 20px;
+}
+.left{
+	float: left;
+    width: 500px;
+    background: #ffffff;
+    top:100px;
+    bottom: 0;
+    
+}
+.right{
+	float:right;
+    left: 505px;
+    top:100px;
+    background: #242633;
+    
+}

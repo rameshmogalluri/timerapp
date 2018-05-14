@@ -67,14 +67,15 @@ function register()
 			 
 			var data=xhr.response;
 	    	var jsonResponse = JSON.parse(data);
-	    	if(jsonResponse.Success === false){
-	    		document.querySelector("#signuperror").innerHTML=jsonResponse.message;
-	    		document.querySelector("#signuperror").style.display="block";
-	    		setTimeout(function(){ document.querySelector("#signuperror").style.display="none" }, 4000);
+	    	if(jsonResponse.Success){
+	    		
+	    		location.href = "/welcome.jsp";	
 	    	}
 	    	else
 	    		 {
-	    		location.href = "/welcome.jsp";
+	    		document.querySelector("#signuperror").innerHTML=jsonResponse.message;
+	    		document.querySelector("#signuperror").style.display="block";
+	    		setTimeout(function(){ document.querySelector("#signuperror").style.display="none" }, 4000);
 	    		 }
 			    
 		}
@@ -114,7 +115,9 @@ function register()
 		    	var jsonResponse = JSON.parse(data);
 		    	console.log(jsonResponse);
 		    	if(jsonResponse.success){
+		    		
 		    		location.href = "/welcome.jsp";
+		    		
 		    	    }
 		    	 else
 		    		{

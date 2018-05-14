@@ -1,6 +1,7 @@
 package com.timer;
 
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -12,16 +13,30 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
-import com.timer.PATCH;
 import org.json.simple.JSONObject;
+
+
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.images.ImagesServiceFactory;
+import com.google.appengine.api.images.ServingUrlOptions;
 
 import static com.timer.ConfigureObjectify.ofy;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.List;
+import java.util.Map;
+
+
 
 
 @Path("/user") 
 public class HelloRestEasy {
+	
+	 private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+
 	@POST
     @Path("/create")  
 	@Consumes("application/json")
@@ -34,6 +49,7 @@ public class HelloRestEasy {
 		if (results!=null) {	
 		result.put("Success", false);
 		result.put("message", "Email already registered");
+		response.setStatus(406);
 		response.setContentType("application/json"); 
 		return result;
        }
@@ -44,6 +60,7 @@ public class HelloRestEasy {
 			session.setAttribute("user", user); 
 			result.put("Success", true);
 			result.put("message", "Successfully registred");
+			response.setStatus(201);
 			response.setContentType("application/json"); 
 			return result; 
 		}
@@ -58,8 +75,8 @@ public class HelloRestEasy {
 		Contact result=ofy().load().type(Contact.class).filter("email",login.getEmail()).first().now();  
 		if(result!=null)
 		{
-			System.out.println(result.getActive()); 
-			if(login.getPassword().equals(result.getPassword()) && result.getActive().equals(true)) 
+			 
+			if(login.getPassword().equals(result.getPassword()) && result.getActive()) 
 			{
 				response.put("success",true);
 				response.put("message","login success");
@@ -100,9 +117,12 @@ public class HelloRestEasy {
 		
 		HttpSession session=request.getSession();
         Contact user=(Contact)session.getAttribute("user");
+        JSONObject responsejson=new JSONObject();
+        if(session.getAttribute("user")!=null)
+        {
         String password=user.getPassword();
         String email=user.getEmail();
-        JSONObject responsejson=new JSONObject();
+        
         String accId=""+user.getId();
         if(id.equals(accId))
         {
@@ -113,6 +133,7 @@ public class HelloRestEasy {
         		responsejson.put("success", false);
         		responsejson.put("message","No changes to modify");
         		response.setContentType("application/json");
+        		response.setStatus(304); 
         		return responsejson;
         	}
         	else{
@@ -138,7 +159,17 @@ public class HelloRestEasy {
         	responsejson.put("success",false);
     		responsejson.put("message","Invalid user");
     		response.setContentType("application/json");
+    		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         	return responsejson;
+        }
+      }
+        else 
+        {
+        	responsejson.put("success",false);
+    		responsejson.put("message","Please login");
+    		response.setContentType("application/json");
+    		response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+    		return responsejson;
         }
 	}
 	@PUT
@@ -150,7 +181,12 @@ public class HelloRestEasy {
 		JSONObject result = new JSONObject();
 		HttpSession session = request.getSession();
 		Contact user=(Contact)session.getAttribute("user");
-		String accId=""+user.getId();
+		
+		if(session.getAttribute("user")!=null)
+		{
+			 System.out.println(user.getId());
+		 String accId=""+user.getId();
+		 System.out.println(accId);
 		 if(id.equals(accId))
 		 {
 		Contact c=ofy().load().type(Contact.class).filter("email",user.getEmail()).first().now();
@@ -166,8 +202,16 @@ public class HelloRestEasy {
 		 {
 			 result.put("success",false);
 			 result.put("message","Invalid user");
+			 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 			 return result;	 
 		 }
+	  }
+	else {
+		result.put("success",false);
+		 result.put("message","Please login"); 
+		 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+		 return result;	
+	}
 	}
 	@GET
 	@Path("/logout")
@@ -188,10 +232,19 @@ public class HelloRestEasy {
 	else
 	{
 	   result.put("Success", false);
-	   result.put("message", "User not logged in");
+	   result.put("message", "you  are not Logged In");
 	   response.setContentType("application/json;charset=UTF-8");
 	  response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 	return result;
 	}
 	}
+	@GET
+	@Path("/delete")
+	public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response) throws URISyntaxException, IOException, ServletException 
+	{
+		request.getRequestDispatcher("index.jsp").forward(request, response);
+	}
+	
 }
+   
+

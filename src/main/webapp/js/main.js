@@ -1,10 +1,11 @@
-
+var id=document.querySelector("#userid").value;
   document.querySelector("#edit").addEventListener("click",main);
   document.querySelector("#close").addEventListener("click",close);
   document.querySelector("#updatebtn").addEventListener("click",update);
   document.querySelector("#deactivate").addEventListener("click",deactivate); 
   document.querySelector("#logout").addEventListener("click",logout);
-  var id=document.querySelector("#userid").value;
+  
+  
   function deactivate(){
 	  
 	  var xhr= new XMLHttpRequest();
@@ -21,6 +22,8 @@
   }
     function main(){
     	document.querySelector("#edit").style.display='none';
+    	
+    	document.querySelector("#imagediv").style.display='none';
     	var a=document.getElementsByClassName("sessiondata");
     	for(i=0;i<a.length;i++)
           a[i].style.display='none';  
@@ -29,9 +32,10 @@
             b[i].style.display='block';
     	
     }
-    function close()
+    function close() 
       {
     	document.querySelector("#edit").style.display='block';
+    	document.querySelector("#imagediv").style.display='block';
     	var a=document.getElementsByClassName("sessiondata");
     	for(i=0;i<a.length;i++)
           a[i].style.display='block';  
@@ -115,6 +119,8 @@
     		            document.querySelector("#updated").style.display="block";
     		            document.querySelector("#nochanges").style.display="none";
     		            document.querySelector("#close").click();
+    		            document.querySelector("#modalclose").click();
+    		           
     		            setTimeout(function(){ document.querySelector("#updated").style.display="none" }, 4000);
     		            
     		    		}
@@ -122,6 +128,7 @@
     		    		{
     		    		document.querySelector("#nochanges").style.display="block";
     		    		document.querySelector("#updated").style.display="none";
+    		    		document.querySelector("#modalclose").click();
     		    		document.querySelector("#close").click();
     		    		setTimeout(function(){ document.querySelector("#nochanges").style.display="none" }, 4000);
     		    		}

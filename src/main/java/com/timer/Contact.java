@@ -28,7 +28,7 @@ public class Contact implements Serializable {
    @Index
    private Boolean active;
    
-   private BlobKey key;
+   private String profileurl;
    
    public Contact() {}
    public Contact(String name,String mobileNumber,String address)
@@ -47,13 +47,18 @@ public class Contact implements Serializable {
        this.mobileNumber = mobileNumber;
        this.address=address;
        this.password = password;
-       this.key=null;
+       this.profileurl=null;
        this.active=true;
      }
-    public void setKey(BlobKey key)
+    public void setProfileurl(String profileurl)
     {
-    	this.key=key;
+    	this.profileurl=profileurl;
     }
+    public String getProfileurl()
+    {
+      return this.profileurl;
+    }
+    
     public String getAddress() {
 		return address;
 	}
