@@ -1,7 +1,6 @@
 package com.timer;
 
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -16,26 +15,21 @@ import javax.ws.rs.core.Context;
 import org.json.simple.JSONObject;
 
 
-import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.ServingUrlOptions;
 
 import static com.timer.ConfigureObjectify.ofy;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
-
-
 
 
 @Path("/user") 
 public class HelloRestEasy {
-	
 	 private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	 public static SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
 
 	@POST
     @Path("/create")  
@@ -184,9 +178,7 @@ public class HelloRestEasy {
 		
 		if(session.getAttribute("user")!=null)
 		{
-			 System.out.println(user.getId());
 		 String accId=""+user.getId();
-		 System.out.println(accId);
 		 if(id.equals(accId))
 		 {
 		Contact c=ofy().load().type(Contact.class).filter("email",user.getEmail()).first().now();
@@ -238,13 +230,91 @@ public class HelloRestEasy {
 	return result;
 	}
 	}
-	@GET
-	@Path("/delete")
-	public void delete(@Context HttpServletRequest request, @Context HttpServletResponse response) throws URISyntaxException, IOException, ServletException 
+	@POST
+	@Path("/clockin/{userid}")
+	@Produces("application/json") 
+	public JSONObject clockIn(@PathParam("userid") String id,@Context HttpServletRequest request,@Context HttpServletResponse response)
 	{
-		request.getRequestDispatcher("index.jsp").forward(request, response);
-	}
+		JSONObject result=new JSONObject();
+	    HttpSession session=request.getSession();
+	    Contact loginuser=(Contact)session.getAttribute("user");
+	    if(session.getAttribute("user")!=null)
+	    {
+	    	String accId=""+loginuser.getId();
+	    	if(id.equals(accId))
+	    	{
+	          Date date = new Date(); 
+	          Long intime=date.getTime();
+	          Timer t=new Timer(loginuser.getId(),intime); 
+	          ofy().save().entity(t).now(); 
+	          
+	          result.put("success",true);
+	          result.put("message","Your timer is started");
+	          result.put("entryid",t.getId());
+	          response.setContentType("application/json;charset=UTF-8");
+	          return result; 
+	    	}
+	    	else {
+	    		
+	    		 result.put("success",false);
+				 result.put("message","Invalid user");
+				 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				 return result;	 
+	    	}
+	    }
+	    else {
+	    	result.put("success",false);
+			 result.put("message","Please login"); 
+			 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	    	return result;
+	    }
+	    
+	}   
 	
+	@PUT
+	@Path("/clockout/{userid}/{entryid}")
+	@Produces("application/json") 
+	public JSONObject clockOut(@PathParam("userid") String id,@PathParam("entryid") String entryid,@Context HttpServletRequest request,@Context HttpServletResponse response)
+	{
+		JSONObject result=new JSONObject();
+	    HttpSession session=request.getSession();
+	    Contact loginuser=(Contact)session.getAttribute("user");
+	    if(session.getAttribute("user")!=null)
+	    {
+	    	String accId=""+loginuser.getId();
+	    	if(id.equals(accId))
+	    	{
+	          Date date = new Date(); 
+	          Long outtime=date.getTime();
+	          Long entryids=Long.parseLong(entryid);
+	         
+	          Timer t=ofy().load().type(Timer.class).id(entryids).now(); 
+	          
+	          t.setOutTime(outtime); 
+	          t.setCompleted(true);  
+	          ofy().save().entity(t).now();  
+	           
+	          result.put("success",true);
+	          result.put("message","Your timer is stopped");
+	          response.setContentType("application/json;charset=UTF-8");
+	          return result; 
+	    	}
+	    	else {
+	    		
+	    		 result.put("success",false);
+				 result.put("message","Invalid user");
+				 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+				 return result;	 
+	    	}
+	    }
+	    else {
+	    	result.put("success",false);
+			 result.put("message","Please login"); 
+			 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+	    	return result;
+	    }
+	    
+	}       
 }
    
 

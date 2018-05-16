@@ -20,7 +20,6 @@ if(!(eventid=="profilepic"||eventid=="menus"||eventid=="welcomename"))
 	  document.querySelector("#deactivate").addEventListener("click",deactivate); 
 	  document.querySelector("#logout").addEventListener("click",logout);
 	  
-	  
 	  function deactivate(){
 		  
 		  var xhr= new XMLHttpRequest();

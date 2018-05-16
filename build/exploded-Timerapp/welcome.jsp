@@ -97,7 +97,7 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 					<button type="button" data-toggle="modal"
 						data-target="#confirmDelete"
 						class="btn btn-danger btn-sm editclassB">
-						<span class="glyphicon glyphicon-trash editclassB"></span> Delete
+						<span class="glyphicon glyphicon-trash editclassB"></span> Close Account
 					</button>
 					<button type="button"  class="btn buttons updateback" id="updatebtn" style="display:none" >UPDATE</button>
 				    <button type="button"  class="btn buttons updateback" id="close" style="display:none">BACK</button>
@@ -163,13 +163,15 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
          </div>
        <div class="col-lg-8 height" style="background-color:lightgray;">
             <div class="timer">
+                <div class="time" >
                   <span id="lblhr">00</span>
-                  : <span id="lblmin">00</span>
-                  : <span id="lblsec">00</span>
+                  : <span  id="lblmin">00</span>
+                  : <span  id="lblsec">00</span></div> 
                <br><br>
                <br>
                <button type="button" class="btn btn-default" id="clockin">Clock In</button>
                <button type="button" class="btn btn-default" id="clockout">Clock Out</button>
+               <input type="hidden" id="entry">
             </div>
          </div>
 </div>
@@ -178,5 +180,6 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src=".//js/dashboard.js"></script> 
+  <script src=".//js/timer.js"></script> 
 </body>
 </html>

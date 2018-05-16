@@ -6,6 +6,7 @@ import com.googlecode.objectify.ObjectifyService;
 public class ConfigureObjectify {
 	static {
 		factory().register(Contact.class);
+		factory().register(Timer.class);  
 		
 		}
 

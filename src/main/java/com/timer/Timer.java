@@ -2,26 +2,27 @@ package com.timer;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class Timer {
 	@Id
-	private Long entryId;
-	private String userId;
+	private Long id;
+	@Index
+	private Long userId;
 	private Long inTime;
 	private Long outTime;
 	private Boolean completed;
-	public Timer(String userId, Long inTime, Long outTime, Long entryId, Boolean completed) {
+	public Timer(Long userId, Long inTime) {
 		this.userId = userId;
 		this.inTime = inTime;
-		this.outTime = outTime;
-		this.entryId = entryId;
-		this.completed = completed;
+		this.outTime = null;
+		this.completed=false;
 	}
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public Long getInTime() {
@@ -36,11 +37,8 @@ public class Timer {
 	public void setOutTime(Long outTime) {
 		this.outTime = outTime;
 	}
-	public Long getEntryId() {
-		return entryId;
-	}
-	public void setEntryId(Long entryId) {
-		this.entryId = entryId;
+	public Long getId() {
+		return id;
 	}
 	public Boolean getCompleted() {
 		return completed;
