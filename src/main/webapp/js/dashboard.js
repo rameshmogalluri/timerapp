@@ -19,6 +19,11 @@ if(!(eventid=="profilepic"||eventid=="menus"||eventid=="welcomename"))
 	  document.querySelector("#updatebtn").addEventListener("click",update);
 	  document.querySelector("#deactivate").addEventListener("click",deactivate); 
 	  document.querySelector("#logout").addEventListener("click",logout);
+	  document.getElementById("profilepics").addEventListener("click",uploadClick);
+	  function uploadClick(){
+			document.getElementById("imageupload").click();
+			return true;
+		}
 	  
 	  function deactivate(){
 		  

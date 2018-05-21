@@ -12,25 +12,44 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-
-
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 
 import static com.timer.ConfigureObjectify.ofy;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
+
+import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson.JacksonFactory;
 
 
 @Path("/user") 
 public class HelloRestEasy {
-	 private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
+	
 	 public static SimpleDateFormat format = new SimpleDateFormat("dd-MMM-yyyy hh:mm:ss a");
+	 public static SimpleDateFormat day=new SimpleDateFormat("EEE MMM dd");
+	 public static SimpleDateFormat time=new SimpleDateFormat("hh:mm:ss a");
+	 TimeZone timezone = TimeZone.getDefault();
+	
+	// private static Logger logger = Logger.getLogger("com.timer.HelloRestEasy");
 
+	@SuppressWarnings("unchecked")
 	@POST
     @Path("/create")  
 	@Consumes("application/json")
@@ -59,6 +78,7 @@ public class HelloRestEasy {
 			return result; 
 		}
 	}
+	@SuppressWarnings("unchecked")
 	@POST
 	@Path("/login")
 	@Consumes("application/json")  
@@ -99,6 +119,48 @@ public class HelloRestEasy {
 		}
 		
 	}
+	@POST
+	@Path("/signinwithgoogle")
+	@Consumes("application/x-www-form-urlencoded")   
+	@Produces("application/json")
+	public JSONObject googlesignin(String idtoken,@Context HttpServletResponse response) throws GeneralSecurityException, IOException
+	{
+		JSONObject result =new JSONObject();
+		
+		HttpTransport transport=new UrlFetchTransport();
+		JsonFactory jsonFactory=new JacksonFactory();
+		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
+			    .setAudience(Collections.singletonList("396012987819-mq6f3iqjj7co9gsel1dbcq9mf8m208h8.apps.googleusercontent.com")).build();
+		
+		GoogleIdToken idToken = verifier.verify(idtoken); 
+		
+		if (idToken != null) {
+			  Payload payload = idToken.getPayload();
+
+			  // Print user identifier
+			  String userId = payload.getSubject();
+			  System.out.println("User ID: " + userId);
+
+			  // Get profile information from payload
+			  String email = payload.getEmail();
+			  boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
+			  String name = (String) payload.get("name");
+			  String pictureUrl = (String) payload.get("picture");
+			  String locale = (String) payload.get("locale");
+			  
+			  result.put("success", true);
+			  result.put("email",email);
+			  response.setContentType("application/json");
+			  return result;
+
+			} else {
+				result.put("success", false);
+				  result.put("message","Invalid token");
+				  response.setContentType("application/json");
+				  return result;
+			}
+	}
+	@SuppressWarnings("unchecked")
 	@PUT
 	@Path("/update/{userid}")
 	@Consumes("application/json")
@@ -166,6 +228,7 @@ public class HelloRestEasy {
     		return responsejson;
         }
 	}
+	@SuppressWarnings("unchecked")
 	@PUT
 	@Path("/deactivate/{userid}")
 	@Produces("application/json")
@@ -205,6 +268,7 @@ public class HelloRestEasy {
 		 return result;	
 	}
 	}
+	@SuppressWarnings("unchecked")
 	@GET
 	@Path("/logout")
 	@Produces("application/json")
@@ -230,6 +294,7 @@ public class HelloRestEasy {
 	return result;
 	}
 	}
+	@SuppressWarnings("unchecked")
 	@POST
 	@Path("/clockin/{userid}")
 	@Produces("application/json") 
@@ -243,14 +308,16 @@ public class HelloRestEasy {
 	    	String accId=""+loginuser.getId();
 	    	if(id.equals(accId))
 	    	{
+	    		 
 	          Date date = new Date(); 
+	          
 	          Long intime=date.getTime();
+	          
 	          Timer t=new Timer(loginuser.getId(),intime); 
 	          ofy().save().entity(t).now(); 
 	          
 	          result.put("success",true);
-	          result.put("message","Your timer is started");
-	          result.put("entryid",t.getId());
+	          result.put("runningentry",t);
 	          response.setContentType("application/json;charset=UTF-8");
 	          return result; 
 	    	}
@@ -271,50 +338,88 @@ public class HelloRestEasy {
 	    
 	}   
 	
-	@PUT
-	@Path("/clockout/{userid}/{entryid}")
+	@SuppressWarnings("unchecked")
+	@GET
+	@Path("/clockout/{entryid}")
 	@Produces("application/json") 
-	public JSONObject clockOut(@PathParam("userid") String id,@PathParam("entryid") String entryid,@Context HttpServletRequest request,@Context HttpServletResponse response)
+	public JSONObject clockOut(@PathParam("entryid") String entryid,@Context HttpServletRequest request,@Context HttpServletResponse response)
 	{
 		JSONObject result=new JSONObject();
-	    HttpSession session=request.getSession();
-	    Contact loginuser=(Contact)session.getAttribute("user");
-	    if(session.getAttribute("user")!=null)
-	    {
-	    	String accId=""+loginuser.getId();
-	    	if(id.equals(accId))
-	    	{
+	   
+	   
+	    	
 	          Date date = new Date(); 
 	          Long outtime=date.getTime();
 	          Long entryids=Long.parseLong(entryid);
 	         
-	          Timer t=ofy().load().type(Timer.class).id(entryids).now(); 
+	         
+	          
+	          Timer t=ofy().load().type(Timer.class).id(entryids).now();
+	           
 	          
 	          t.setOutTime(outtime); 
 	          t.setCompleted(true);  
 	          ofy().save().entity(t).now();  
 	           
+	         
+	          
 	          result.put("success",true);
-	          result.put("message","Your timer is stopped");
+	          result.put("clockoutentry",t); 
 	          response.setContentType("application/json;charset=UTF-8");
 	          return result; 
-	    	}
-	    	else {
-	    		
-	    		 result.put("success",false);
-				 result.put("message","Invalid user");
-				 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-				 return result;	 
-	    	}
-	    }
-	    else {
-	    	result.put("success",false);
-			 result.put("message","Please login"); 
-			 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-	    	return result;
-	    }
 	    
-	}       
-}
+	} 
+	
+   @SuppressWarnings("unchecked")
+   @GET
+   @Path("/timerentries/{userid}") 
+   @Produces("application/json")
+   public Response timerentries(@PathParam("userid") String userid) 
+   {
+	   JSONArray timeentrylist=new JSONArray();
+	   JSONObject timeentry = new JSONObject();
+	   
+	
+	    
+	   Calendar c = Calendar.getInstance();
+	    c.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);  
+	    c.set(Calendar.HOUR_OF_DAY, 0);
+	    c.set(Calendar.MINUTE, 0);
+	    c.set(Calendar.SECOND, 0);
+	    c.set(Calendar.MILLISECOND, 0);
+	    Date sun=c.getTime();
+	    
+	     
+	     Date d=new Date();
+	     TimeZone tz=TimeZone.getDefault();
+	     day.setTimeZone(tz); 
+	     String today=day.format(d);
+List<Timer> timerInfoList = ofy().load().type(Timer.class).filter("userId", Long.parseLong(userid)).filter("inTime >",sun.getTime()).list();
+	   
+	   for(Timer t:timerInfoList)
+	   {
+		   timeentrylist.add(t);   
+	   } 
+	   timeentry.put("success",true);
+	   timeentry.put("currentdate",d.getTime()); 
+	   timeentry.put("todaydate",today); 
+	   timeentry.put("timeentry",timeentrylist);
+	   
+	   return Response.status(200).entity(timeentry).build(); 
+      }
+   @SuppressWarnings("unchecked")
+   @GET
+   @Path("/clockinwithjs/{intime}")
+	public JSONObject clockinjs(@PathParam("intime") String intime)	{
+		
+	   JSONObject result=new JSONObject();
+	   Long intimes=Long.parseLong(intime); 
+	  result.put("success", true);
+	  result.put("time", new Date(intimes));
+	   return result;
+	 }
+ }
+
+
    
 

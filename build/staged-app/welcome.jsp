@@ -43,8 +43,10 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 				<div class="modal-body">
 				<div id="imagediv">
 				  <img alt="User Photo" src="<%=profilepicurl%>" width="120px" height="120px" class="img-circle">   
-				    <a href="" data-toggle="modal" 
-			data-target="#uploadimage"> Change Photo</a>   
+				   <a  href="" id="profilepics">change photo</a>   
+			 <form style="display:none" action="<%= blobstoreService.createUploadUrl("/imageupload",uploadOptions)%>" method="post" enctype="multipart/form-data">
+                       <input type="file" name="profilepic" id="imageupload">
+			 </form>
 				</div>
 				<button style="margin-left: 500px" type="button" id="edit"
 						class="btn btn-sm editclassB">
@@ -97,7 +99,7 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 					<button type="button" data-toggle="modal"
 						data-target="#confirmDelete"
 						class="btn btn-danger btn-sm editclassB">
-						<span class="glyphicon glyphicon-trash editclassB"></span> Delete
+						<span class="glyphicon glyphicon-trash editclassB"></span> Close Account
 					</button>
 					<button type="button"  class="btn buttons updateback" id="updatebtn" style="display:none" >UPDATE</button>
 				    <button type="button"  class="btn buttons updateback" id="close" style="display:none">BACK</button>
@@ -118,7 +120,7 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 			</div>
 		</div>
 	</div>
-	<div id="uploadimage" class="modal" role="dialog">
+	<%-- <div id="uploadimage" class="modal" role="dialog">
 		<div class="modal-dialog modal-sm">
 			<div class="modal-content">
 				<div class="modal-body">
@@ -134,7 +136,7 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 
 
 <!--  main content  -->
@@ -158,25 +160,33 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
   
   
  <div class="row ">
-        <div class="col-lg-4 height" style="background-color:lightcyan">
-           
+        <div class="col-lg-4 height" style="background-color:lightcyan" id="entrylist">
+             <div class="timeinfo" id="timeinfo">
+                 <div class="date"><span id="date"></span></div>     
+                 <div><span id="intime" class="timeslist"></span> <span id="outtime" class="timeslist"></span> <span id="hours" class="timeslist"></span></div>
+             </div>
          </div>
        <div class="col-lg-8 height" style="background-color:lightgray;">
             <div class="timer">
+                <div class="time" >
                   <span id="lblhr">00</span>
-                  : <span id="lblmin">00</span>
-                  : <span id="lblsec">00</span>
+                  : <span  id="lblmin">00</span>
+                  : <span  id="lblsec">00</span></div> 
                <br><br>
                <br>
                <button type="button" class="btn btn-default" id="clockin">Clock In</button>
+               
                <button type="button" class="btn btn-default" id="clockout">Clock Out</button>
+                <br>
+               <input type="hidden" id="entry">
+               
             </div>
          </div>
 </div>
     
-  
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src=".//js/dashboard.js"></script> 
+  <script src=".//js/timer.js"></script> 
 </body>
 </html>
