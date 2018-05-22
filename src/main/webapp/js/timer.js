@@ -1,6 +1,7 @@
 var id=document.querySelector("#userid").value;
 document.querySelector("#clockin").addEventListener("click",clockin);
 document.querySelector("#clockout").addEventListener("click",clockout); 
+document.querySelector("#entrydelete").addEventListener("click",timerentrydelete);
 document.addEventListener("DOMContentLoaded",pagereload);
 document.querySelector("#clockout").disabled = true;
 var seconds=document.querySelector("#lblsec");
@@ -8,6 +9,7 @@ var minutes=document.querySelector("#lblmin");
 var hours=document.querySelector("#lblhr"); 
 
 var entrylist=document.querySelector("#entrylist"); 
+
 
 var sec=0;
 var min=0;
@@ -37,19 +39,36 @@ function createdaydiv(divid,intimeday,outtimeday,duration,entryid)
 	 
 	 var span2=document.createElement("span");
 	 innerdiv.appendChild(span2);
-	 span2.innerHTML="00 h 00 m";
+	 span2.innerHTML="0 h 0 m";
 	 span2.classList.add("duration");
 	 span2.id=divid+"duration";
 	 
+	 var link=document.createElement("a");
+	 innerdiv.appendChild(link);
+	 link.href="#";
+	 var temp=divid+"btn";
+	 var temp1=temp.replace(/ /g,"_"); 
+	 link.id=temp1; 
+	 link.onclick = function() { buttonclick(temp1) }; 
+	 
+	 
+	 
+	 var span6=document.createElement("span");
+	 link.appendChild(span6);
+	 span6.classList.add("glyphicon");
+	 span6.classList.add("glyphicon-menu-down");
+	 span6.classList.add("displaybuttons");
+	 
 	  ele1 = document.createElement("div"); 
 	 ele1.id=entryid;
+	 ele1.classList.add("entrylist");
 	 ele.appendChild(ele1);
 	}
-	
-	 else
+	  else
 		 {
 	   ele1 = document.createElement("div"); 
 	   ele1.id=entryid;
+	   ele1.classList.add("entrylist");
 	   myEle.appendChild(ele1);  
 		 }
 	 var span3=document.createElement("span");
@@ -78,6 +97,21 @@ function createdaydiv(divid,intimeday,outtimeday,duration,entryid)
 	 span5.innerHTML=duration;
 	 span5.classList.add("timeslist");
 	 
+	 if(outtimeday != null)
+	 {
+	 var link=document.createElement("a");
+	 ele1.appendChild(link);
+	 link.href="#"; 
+	 link.onclick = function() { deleteclick(link.parentElement.id) }; 
+	 
+	 var span7=document.createElement("span");
+	 link.appendChild(span7);
+	 span7.classList.add("glyphicon");
+	 span7.classList.add("glyphicon-trash");
+	 span7.classList.add("displaybuttons");
+	 span7.setAttribute("data-toggle","modal"); 
+	 span7.setAttribute("data-target","#deleteentry");
+   }
 }
 var todaysec=0;
 var todaymin=0;
@@ -85,21 +119,32 @@ var todayhrs=0;
 
 var dayOverallhrs=0;
 var dayOverallmin=0;
-var dayOverallDuration=0;
+var dayhrs=0;
+var daymin=0;
 var tempdayformat;
-
+var tempdayformat1;
 function calculateduration(intime,outtime,dayformat,todaydayformat,completedstatus,currentdate){
+	tempdayformat=dayformat;
+	
 	  if(!completedstatus)
 		 {	
 		   outtime=currentdate;
 		 }
 	var diff =Math.abs(outtime-intime);     
-	
 	var diffSeconds =parseInt(diff / 1000 % 60);
 	var diffMinutes =parseInt(diff / (60 * 1000) % 60);
 	var diffHours = parseInt(diff / (60 * 60 * 1000) % 24);
 	
-	var duration=diffHours+" h "+diffMinutes+" m";
+	//var duration=diffHours+" h "+diffMinutes+" m";
+	
+	 var temphours=diffHours;
+	 var tempminutes=diffMinutes;
+	 
+	 if(temphours<=9)
+		 temphours="0"+temphours;
+	 if(tempminutes<=9)
+		 tempminutes="0"+tempminutes;
+	 var duration=temphours+" h "+tempminutes+" m"
 	
 	if(dayformat === todaydayformat)
 		{ 
@@ -133,10 +178,96 @@ function calculateduration(intime,outtime,dayformat,todaydayformat,completedstat
 		    			 hours.innerHTML=todayhrs;  
 		    	 
 		}
+	
+	if(tempdayformat!=tempdayformat1){
+		 dayOverallhrs=0;
+		 dayOverallmin=0;
+		 daymin=0;
+		 dayhrs=0;
+		tempdayformat1=tempdayformat;
+	}
+	if(tempdayformat === tempdayformat1)
+		{
+		   dayOverallhrs=dayhrs+=diffHours;
+		    dayOverallmin=daymin+=diffMinutes;
+		    
+			     while(dayOverallmin>=60)
+			    	 {
+			    	 dayOverallhrs++;
+			    	 dayOverallmin=dayOverallmin-60;
+			    	 }
+			     
+			     daymin=dayOverallmin;
+			     dayhrs=dayOverallhrs;   
+			     if(dayOverallmin<=9)
+			    	 {
+			    	 dayOverallmin="0"+dayOverallmin;
+			    	 }
+			     if(dayOverallhrs<=9)
+		    	 {
+			    	 dayOverallhrs="0"+dayOverallhrs;
+		    	 }
+		}
     
     return duration;
 }
-
+ function buttonclick(id)
+{
+	 $("#"+id).parent().siblings().toggle();  
+}
+ 
+ function deleteclick(parentid){
+	 console.log(parentid);
+	 var modal = document.getElementById('myModal');
+	 modal.style.display = "block";
+	document.getElementById("hideentryid").value=parentid;
+ }
+ 
+ var modal = document.getElementById('myModal');
+ var span = document.getElementsByClassName("close")[0];
+ span.onclick = function() {
+	    modal.style.display = "none";
+	}
+ var no=document.getElementById('no');
+ no.onclick = function() {
+	    modal.style.display = "none";
+	} 
+ 
+ window.onclick = function(event) {
+	    if (event.target == modal) {
+	        modal.style.display = "none";
+	    }
+	}
+ 
+ function timerentrydelete()
+ {
+	var entryid=document.getElementById("hideentryid").value;
+	console.log(entryid); 
+	
+	try{
+		var xhr= new XMLHttpRequest();
+	    var url= "/user/timerentry/delete/"+entryid;
+	    xhr.onload = function() {
+	    if (this.readyState == 4 && this.status == 200) {
+	    var result = xhr.response;
+	    var parsedResult = JSON.parse(result);
+	           if(parsedResult.success)
+	        	    {
+	        	     location.reload();  
+	        	    }
+	      }
+	    };
+	    xhr.open("DELETE",url,true);
+	    xhr.send();
+		
+	}
+	catch(error)
+	   {
+	 	console.log(error);  
+	   }
+ }
+ 
+ 
 function pagereload(){
 	
 	   try{ 
@@ -153,6 +284,7 @@ function pagereload(){
 			        	   	 
 			        	   		var duration=calculateduration(parsedResult.timeentry[i].inTime,parsedResult.timeentry[i].outTime,parsedResult.timeentry[i].dayformat,parsedResult.todaydate,parsedResult.timeentry[i].completed,parsedResult.currentdate); 
 			        	   		createdaydiv(parsedResult.timeentry[i].dayformat,parsedResult.timeentry[i].intimeday,parsedResult.timeentry[i].outtimeday,duration,parsedResult.timeentry[i].id);
+			        	   		document.getElementById(parsedResult.timeentry[i].dayformat+"duration").innerHTML=dayOverallhrs+" h "+dayOverallmin+" m";
 			        	   		if(!(parsedResult.timeentry[i].completed)) 
 			        			 {	
 			        	   		   document.getElementById("entry").value = parsedResult.timeentry[i].id;
@@ -164,8 +296,18 @@ function pagereload(){
 			        	   	var todaydurationspan=document.getElementById(parsedResult.todaydate+"duration");
 			        	   	  if(todaydurationspan != null)
 			        	   		  {
-			        	   		   todaydurationspan.innerHTML=todayhrs+" h "+todaymin+" m";
-			        	   		  }
+			        	   		   var temptodayhrs=todayhrs;
+			        	   		   var temptodaymin=todaymin;
+			        	   		if(temptodaymin<=9)
+						    	 {
+			        	   			temptodaymin="0"+todaymin;
+						    	 }
+						         if(temptodayhrs<=9)
+					    	       {
+						    	    temptodayhrs="0"+todayhrs;
+					    	       }
+			        	   		   todaydurationspan.innerHTML=temptodayhrs+" h "+temptodaymin+" m";
+			        	   		 }
 			        	   	
 			            }  
 			   } 
@@ -195,8 +337,8 @@ function pagereload(){
 		        	var duration=0+" h "+0+" m"; 
 		        	document.querySelector("#entry").value=parsedResult.runningentry.id;
         	   		createdaydiv(parsedResult.runningentry.dayformat,parsedResult.runningentry.intimeday,parsedResult.runningentry.outtimeday,duration,parsedResult.runningentry.id);
-
-		        	timer();
+        	   		//timer();
+        	   		location.reload();
 		        }
 		        
 		      }
@@ -223,6 +365,19 @@ function pagereload(){
 		          var clockoutspan= document.getElementById("clockoutentry").innerHTML=parsedResult.clockoutentry.outtimeday;
 		          document.getElementById("clockoutentry").id=parsedResult.clockoutentry.outtimeday;
 		          document.getElementById(parsedResult.clockoutentry.outtimeday).nextSibling.innerHTML=duration;
+		         var parentdiv= document.getElementById(parsedResult.clockoutentry.id);
+		         
+		         var link=document.createElement("a");
+		         parentdiv.appendChild(link);
+		    	 link.href="#"; 
+		    	 link.onclick = function() { deleteclick(parsedResult.clockoutentry.id) };   
+		    	 
+		    	 var span7=document.createElement("span");
+		    	 link.appendChild(span7);
+		    	 span7.classList.add("glyphicon");
+		    	 span7.classList.add("glyphicon-trash");
+		    	 span7.classList.add("displaybuttons");
+		    	 
 		           clearTimeout(t);
 		         }
 		      }

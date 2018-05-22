@@ -75,7 +75,8 @@ if(!(eventid=="profilepic"||eventid=="menus"||eventid=="welcomename"))
 	    xhr.onload = function() {
 	    if (this.readyState == 4 && this.status == 200) {
 	    var result = xhr.response;
-	    var parsedResult = JSON.parse(result);
+	    var parsedResult = JSON.parse(result); 
+	    
 	    location.replace("/");
 	    }
 	    };

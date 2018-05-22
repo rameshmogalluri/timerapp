@@ -27,8 +27,7 @@ public class Timer {
 	private Long outTime;
 	@Index
 	private Boolean completed;
-	@Ignore
-	private String days;
+	
 	@Ignore
 	private String intimeday;
 	@Ignore

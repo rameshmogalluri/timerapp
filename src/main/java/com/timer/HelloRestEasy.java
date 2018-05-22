@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -119,16 +120,18 @@ public class HelloRestEasy {
 		}
 		
 	}
+	@SuppressWarnings({ "unchecked", "unused" })
 	@POST
 	@Path("/signinwithgoogle")
 	@Consumes("application/x-www-form-urlencoded")   
 	@Produces("application/json")
-	public JSONObject googlesignin(String idtoken,@Context HttpServletResponse response) throws GeneralSecurityException, IOException
+	public JSONObject googlesignin(String idtoken,@Context HttpServletRequest request,@Context HttpServletResponse response) throws GeneralSecurityException, IOException
 	{
 		JSONObject result =new JSONObject();
 		
 		HttpTransport transport=new UrlFetchTransport();
 		JsonFactory jsonFactory=new JacksonFactory();
+		
 		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
 			    .setAudience(Collections.singletonList("396012987819-mq6f3iqjj7co9gsel1dbcq9mf8m208h8.apps.googleusercontent.com")).build();
 		
@@ -139,17 +142,32 @@ public class HelloRestEasy {
 
 			  // Print user identifier
 			  String userId = payload.getSubject();
-			  System.out.println("User ID: " + userId);
 
 			  // Get profile information from payload
 			  String email = payload.getEmail();
 			  boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
 			  String name = (String) payload.get("name");
-			  String pictureUrl = (String) payload.get("picture");
+			  String pictureUrl = (String) payload.get("picture"); 
 			  String locale = (String) payload.get("locale");
 			  
+			  HttpSession session=request.getSession();
+			  
+			  Contact results = ofy().load().type(Contact.class).filter("email",email).first().now(); 
+			  
+			  if(results == null)
+			  {
+				  Contact user= new Contact(name,email,null,locale,null);  
+				  user.setProfileurl(pictureUrl);  
+				  ofy().save().entity(user).now(); 
+				  session.setAttribute("user",user); 
+			  }
+			  else
+			  {
+				  session.setAttribute("user",results);   
+			  }
+			  
 			  result.put("success", true);
-			  result.put("email",email);
+			  result.put("message","successfully loged in");
 			  response.setContentType("application/json");
 			  return result;
 
@@ -399,7 +417,7 @@ List<Timer> timerInfoList = ofy().load().type(Timer.class).filter("userId", Long
 	   for(Timer t:timerInfoList)
 	   {
 		   timeentrylist.add(t);   
-	   } 
+	   }  
 	   timeentry.put("success",true);
 	   timeentry.put("currentdate",d.getTime()); 
 	   timeentry.put("todaydate",today); 
@@ -408,14 +426,25 @@ List<Timer> timerInfoList = ofy().load().type(Timer.class).filter("userId", Long
 	   return Response.status(200).entity(timeentry).build(); 
       }
    @SuppressWarnings("unchecked")
-   @GET
-   @Path("/clockinwithjs/{intime}")
-	public JSONObject clockinjs(@PathParam("intime") String intime)	{
-		
+   @DELETE
+   @Produces("application/json")
+   @Path("/timerentry/delete/{entryid}") 
+	public JSONObject clockinjs(@PathParam("entryid") String entryid){  	
 	   JSONObject result=new JSONObject();
-	   Long intimes=Long.parseLong(intime); 
-	  result.put("success", true);
-	  result.put("time", new Date(intimes));
+	   
+	   Long entryids=Long.parseLong(entryid);
+       Timer t=ofy().load().type(Timer.class).id(entryids).now();
+       if(t!=null)
+       {
+       ofy().delete().entity(t).now();
+       result.put("success", true); 
+       result.put("message","Successfully deleted");
+       }  
+       else
+       {
+    	   result.put("success",false); 
+    	   result.put("message","Entry id not existed");
+       }
 	   return result;
 	 }
  }

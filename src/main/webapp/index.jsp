@@ -75,7 +75,7 @@ if(session.getAttribute("user") != null)
         <button type="reset"  class="btn buttons" >CLEAR</button>
       </div>
       
-       <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <!--  <div class="g-signin2" data-onsuccess="onSignIn"></div> --> 
        <br>
        
     </div>

@@ -133,7 +133,8 @@ function register()
  }
  function onSignIn(googleUser) {
 	  var id_token = googleUser.getAuthResponse().id_token;
-	  console.log(id_token);
+	  
+	  console.log(id_token); 
 	  var xhr = new XMLHttpRequest();
 	  xhr.open('POST', '/user/signinwithgoogle',true);
 	  xhr.onload = function() {
@@ -142,12 +143,12 @@ function register()
 	    		var data=xhr.response;
 		    	var jsonResponse = JSON.parse(data);
 		    	if(jsonResponse.success){
-		    		console.log('Signed in as: ' + jsonResponse.email);  
+		    		location.href = "/welcome.jsp"; 
 		    	}
 		    	else
 		    		console.log('Signed in as: ' + jsonResponse.message);  
 		  }
 	  };
 	  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	  xhr.send('idtoken=' + id_token);
+	  xhr.send(id_token);  
 	}

@@ -9,62 +9,10 @@ var hours=document.querySelector("#lblhr");
 
 var entrylist=document.querySelector("#entrylist"); 
 
+
 var sec=0;
 var min=0;
 var hrs=0;
-
-/* function reload()
- {
-try{
-	var xhr= new XMLHttpRequest(); 
-	var url="/user/timerinfo/"+id; 
-	xhr.open("GET",url,true)
-	 xhr.onload=function(){
-	   if (this.readyState == 4) {
-		   
-		   var result = xhr.response;
-	        var parsedResult = JSON.parse(result);
-	        if (parsedResult.Success) {
-	        	
-	        	document.getElementById("entry").value = parsedResult.runningentryid;
-	        	for (i = 0; i < parsedResult.timerentrylist.length; i++) {
-	        		
-	        	
-	        	
-	        	var node = document.createElement("div");
-	        	document.querySelector("#timeinfo").appendChild(node);
-	        	
-	        	var span1 = document.createElement("span");
-	        	node.appendChild(span1);
-	        	span1.classList.add("timeslist");
-	        	span1.id=parsedResult.timerentrylist[i].entryid;
-	        	document.getElementById(parsedResult.timerentrylist[i].entryid).innerHTML=parsedResult.timerentrylist[i].intime+" "+parsedResult.timerentrylist[i].outtime;
-	        	
-	        	
-	        	}
-	        	   hrs=parsedResult.hh;
-	        	   min=parsedResult.mm;
-	        	   sec=parsedResult.ss;
-	        	   
-	        	if (parsedResult.running) {
-	        	 add();
-	        	document.getElementById("clockin").disabled = true;
-	        	document.getElementById("clockout").disabled = false;
-
-	        	    }
-
-	        	}
-	        
-		   
-	   } 
-	};
-	xhr.send();
- }
-  catch(error)
-  {
-	console.log(error); 
-  }
- }*/
 
 function createdaydiv(divid,intimeday,outtimeday,duration,entryid)
 {
@@ -90,19 +38,36 @@ function createdaydiv(divid,intimeday,outtimeday,duration,entryid)
 	 
 	 var span2=document.createElement("span");
 	 innerdiv.appendChild(span2);
-	 span2.innerHTML="20h";
+	 span2.innerHTML="0 h 0 m";
 	 span2.classList.add("duration");
 	 span2.id=divid+"duration";
 	 
+	 var link=document.createElement("a");
+	 innerdiv.appendChild(link);
+	 link.href="#";
+	 var temp=divid+"btn";
+	 var temp1=temp.replace(/ /g,"_"); 
+	 link.id=temp1; 
+	 link.onclick = function() { buttonclick(temp1) }; 
+	 
+	 
+	 
+	 var span6=document.createElement("span");
+	 link.appendChild(span6);
+	 span6.classList.add("glyphicon");
+	 span6.classList.add("glyphicon-option-horizontal");
+	 span6.classList.add("displaybuttons");
+	 
 	  ele1 = document.createElement("div"); 
 	 ele1.id=entryid;
+	 ele1.classList.add("entrylist");
 	 ele.appendChild(ele1);
 	}
-	
-	 else
+	  else
 		 {
 	   ele1 = document.createElement("div"); 
 	   ele1.id=entryid;
+	   ele1.classList.add("entrylist");
 	   myEle.appendChild(ele1);  
 		 }
 	 var span3=document.createElement("span");
@@ -113,9 +78,18 @@ function createdaydiv(divid,intimeday,outtimeday,duration,entryid)
 	 
 	 var span4=document.createElement("span");
 	 ele1.appendChild(span4);
-	 span4.innerHTML=outtimeday;
+	 if(outtimeday === null)
+		 {
+		 span4.innerHTML="Ongoing"; 
+		 span4.id="clockoutentry";
+		 }
+	 else
+		 {
+	     span4.innerHTML=outtimeday;
+	     span4.id=outtimeday;
+		 }
 	 span4.classList.add("timeslist");
-	 span4.id=outtimeday;
+	 
 	 
 	 var span5=document.createElement("span");
 	 ele1.appendChild(span5);
@@ -123,22 +97,94 @@ function createdaydiv(divid,intimeday,outtimeday,duration,entryid)
 	 span5.classList.add("timeslist");
 	 
 }
-function calculateduration(intime,outtime){
+var todaysec=0;
+var todaymin=0;
+var todayhrs=0;
+
+var dayOverallhrs=0;
+var dayOverallmin=0;
+var dayhrs=0;
+var daymin=0;
+var tempdayformat;
+var tempdayformat1;
+function calculateduration(intime,outtime,dayformat,todaydayformat,completedstatus,currentdate){
+	tempdayformat=dayformat;
 	
-	var diff = (outtime-intime);    
+	  if(!completedstatus)
+		 {	
+		   outtime=currentdate;
+		 }
+	var diff =Math.abs(outtime-intime);     
+	var diffSeconds =parseInt(diff / 1000 % 60);
+	var diffMinutes =parseInt(diff / (60 * 1000) % 60);
+	var diffHours = parseInt(diff / (60 * 60 * 1000) % 24);
 	
-	var diffSeconds = diff / 1000 % 60;
-	var diffMinutes = diff / (60 * 1000) % 60;
-	var diffHours = diff / (60 * 60 * 1000) % 24;
-	var diffDays = diff / (24 * 60 * 60 * 1000);
+	var duration=diffHours+" h "+diffMinutes+" m";
 	
-    var duration=diffHours+" h "+diffMinutes+" m";
+	if(dayformat === todaydayformat)
+		{ 
+		   todaysec=sec+=diffSeconds;
+		   todaymin=min+=diffMinutes;
+		   todayhrs=hrs+=diffHours;
+		     while(todaysec>=60)
+		    	 {
+		    	 todaymin++;
+		    	 todaysec=todaysec-60;
+		    	 }
+		     while(todaymin>=60)
+		    	 {
+		    	 todayhrs++;
+		    	 todaymin=todaymin-60;
+		    	 }
+		     sec=todaysec;
+		     min=todaymin;
+		     hrs=todayhrs;
+		     if(todaysec<=9)
+		    	 seconds.innerHTML="0"+todaysec;
+		    	 else
+		    		 seconds.innerHTML=todaysec;
+		    	 if(todaymin<=9)
+		    		 minutes.innerHTML="0"+todaymin;
+		    		 else
+		    			 minutes.innerHTML=todaymin;
+		    	 if(todayhrs<=9)
+		    		 hours.innerHTML="0"+todayhrs;
+		    		 else
+		    			 hours.innerHTML=todayhrs;  
+		    	 
+		}
+	
+	if(tempdayformat!=tempdayformat1){
+		 dayOverallhrs=0;
+		 dayOverallmin=0;
+		 daymin=0;
+		 dayhrs=0;
+		tempdayformat1=tempdayformat;
+	}
+	if(tempdayformat === tempdayformat1)
+		{
+		   dayOverallhrs=dayhrs+=diffHours;
+		    dayOverallmin=daymin+=diffMinutes;
+		    
+			     while(dayOverallmin>=60)
+			    	 {
+			    	 dayOverallhrs++;
+			    	 dayOverallmin=dayOverallmin-60;
+			    	 }
+			     
+			     daymin=dayOverallmin;
+			     dayhrs=dayOverallhrs;     
+		}
+    
     return duration;
 }
-
+ function buttonclick(id)
+{
+	 $("#"+id).parent().siblings().toggle();  
+}
 function pagereload(){
 	
-	   try{
+	   try{ 
 		   var xhr= new XMLHttpRequest(); 
 			var url="/user/timerentries/"+id;  
 			xhr.open("GET",url,true)
@@ -148,14 +194,25 @@ function pagereload(){
 			          var parsedResult = JSON.parse(result);
 			          if (parsedResult.success) {
 			        	
-			        	   	for(i=0;i<parsedResult.timeentry.length;i++)	{
-			        	   		
-			        	   		console.log(parsedResult.timeentry[i]); 
+			        	   	for(i=parsedResult.timeentry.length-1;i>=0;i--)	{
 			        	   	 
-			        	   		var duration=calculateduration(parsedResult.timeentry[i].inTime,parsedResult.timeentry[i].outTime); 
+			        	   		var duration=calculateduration(parsedResult.timeentry[i].inTime,parsedResult.timeentry[i].outTime,parsedResult.timeentry[i].dayformat,parsedResult.todaydate,parsedResult.timeentry[i].completed,parsedResult.currentdate); 
 			        	   		createdaydiv(parsedResult.timeentry[i].dayformat,parsedResult.timeentry[i].intimeday,parsedResult.timeentry[i].outtimeday,duration,parsedResult.timeentry[i].id);
-			        	   		
-			        	   	 }        
+			        	   		document.getElementById(parsedResult.timeentry[i].dayformat+"duration").innerHTML=dayOverallhrs+" h "+dayOverallmin+" m";
+			        	   		if(!(parsedResult.timeentry[i].completed)) 
+			        			 {	
+			        	   		   document.getElementById("entry").value = parsedResult.timeentry[i].id;
+			        	   		   add();
+			     	        	   document.getElementById("clockin").disabled = true;
+			     	        	   document.getElementById("clockout").disabled = false;
+			        			 }
+			        	   	 }   
+			        	   	var todaydurationspan=document.getElementById(parsedResult.todaydate+"duration");
+			        	   	  if(todaydurationspan != null)
+			        	   		  {
+			        	   		   todaydurationspan.innerHTML=todayhrs+" h "+todaymin+" m";
+			        	   		  }
+			        	   	
 			            }  
 			   } 
 			};
@@ -179,18 +236,13 @@ function pagereload(){
 		        if(parsedResult.success){
 		        	document.querySelector("#clockin").disabled = true;
 		        	document.querySelector("#clockout").disabled = false;
-		        	document.querySelector("#entry").value=parsedResult.entryid;
-		        	document.querySelector("#date").innerHTML=parsedResult.intimewithday;
 		        	
-		        	var node = document.createElement("div");
-		        	document.querySelector("#timeinfo").appendChild(node);
 		        	
-		        	var span1 = document.createElement("span");
-		        	node.appendChild(span1);
-		        	span1.classList.add("timeslist");
-		        	span1.id=parsedResult.entryid;
-		        	document.getElementById(parsedResult.entryid).innerHTML=parsedResult.intime+"  Ongoing";
-		        	timer();
+		        	var duration=0+" h "+0+" m"; 
+		        	document.querySelector("#entry").value=parsedResult.runningentry.id;
+        	   		createdaydiv(parsedResult.runningentry.dayformat,parsedResult.runningentry.intimeday,parsedResult.runningentry.outtimeday,duration,parsedResult.runningentry.id);
+        	   		//timer();
+        	   		location.reload();
 		        }
 		        
 		      }
@@ -212,9 +264,11 @@ function pagereload(){
 		         {
 		           document.querySelector("#clockin").disabled = false;
 		           document.querySelector("#clockout").disabled = true;
-		           
-		           var node=document.getElementById(parsedResult.entryid);
-		           node.innerHTML=parsedResult.intime+"  "+parsedResult.outtime;
+		        		           
+		           var duration=calculateduration(parsedResult.clockoutentry.inTime,parsedResult.clockoutentry.outTime,parsedResult.clockoutentry.dayformat,parsedResult.clockoutentry.dayformat,parsedResult.clockoutentry.completed,""); 
+		          var clockoutspan= document.getElementById("clockoutentry").innerHTML=parsedResult.clockoutentry.outtimeday;
+		          document.getElementById("clockoutentry").id=parsedResult.clockoutentry.outtimeday;
+		          document.getElementById(parsedResult.clockoutentry.outtimeday).nextSibling.innerHTML=duration;
 		           clearTimeout(t);
 		         }
 		      }

@@ -85,10 +85,12 @@ run {      // local (dev_appserver) configuration (standard environments only)
     port = 8080  
                   
    jvmFlags = ["-Ddatastore.backing_store=\"D:/temp/local_db.bin\""]
+   
+
   }
   
       
-
+ 
 
   deploy {   // deploy configuration
   

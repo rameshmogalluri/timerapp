@@ -1,8 +1,8 @@
-<!-- Indices written at Mon, 21 May 2018 12:00:42 IST -->
+<!-- Indices written at Tue, 22 May 2018 17:54:23 IST -->
 
 <datastore-indexes>
 
-    <!-- Used 1 time in query history -->
+    <!-- Used 3 times in query history -->
     <datastore-index kind="Timer" ancestor="false" source="auto">
         <property name="userId" direction="asc"/>
         <property name="inTime" direction="asc"/>

@@ -10,6 +10,7 @@ if(session.getAttribute("user") != null)
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en">
   <head>
     <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+    <meta name="google-signin-client_id" content="396012987819-mq6f3iqjj7co9gsel1dbcq9mf8m208h8.apps.googleusercontent.com">
     <title>SIGNUP/SIGNIN</title>
       
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -73,6 +74,9 @@ if(session.getAttribute("user") != null)
         <button type="button"  class="btn buttons" id="signinbutton">SIGNIN</button> 
         <button type="reset"  class="btn buttons" >CLEAR</button>
       </div>
+      
+        <!--  <div class="g-signin2" data-onsuccess="onSignIn"></div> --> 
+       <br>
        
     </div>
   </div>
@@ -81,6 +85,7 @@ if(session.getAttribute("user") != null)
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>  
     <script src="/js/register.js"> 
      </script>
   </body>
