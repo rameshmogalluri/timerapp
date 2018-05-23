@@ -37,19 +37,18 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 <!--modals -->
 
   
-<div id="profiledetailsmodal" class="modal" role="dialog">
+<div id="profiledetailsmodal" class="modals">
 		<div class="modal-dialog modal-md">
-			<div class="modal-content">
+			<div class="modal-content-main" >
 				<div class="modal-body">
 				<div id="imagediv">
 				  <img alt="User Photo" src="<%=profilepicurl%>" width="120px" height="120px" class="img-circle">   
-				   <a  href="" id="profilepics"  data-toggle="modal"
-						data-target="#uploadimage">change photo</a>   
+				   <a  href="" id="profilepics" onclick="imagemodal()">change photo</a>   
 			 <%-- <form style="display:none" action="<%= blobstoreService.createUploadUrl("/imageupload",uploadOptions)%>" method="post" enctype="multipart/form-data">
                        <input type="file" name="profilepic" id="imageupload">
 			 </form> --%>
 				</div>
-				<button style="margin-left: 500px" type="button" id="edit"
+				<button style="margin-left: 350px" type="button" id="edit"
 						class="btn btn-sm editclassB">
 						<span class="glyphicon glyphicon-pencil editclassB"></span> Edit
 					</button>
@@ -96,8 +95,7 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 					
 				</div>
 				<div class="modal-footer">
-					<button type="button" data-toggle="modal"
-						data-target="#confirmDelete"
+					<button type="button" onclick="deletemodal()"
 						class="btn btn-danger btn-sm editclassB">
 						<span class="glyphicon glyphicon-trash editclassB"></span> Close Account
 					</button>
@@ -107,22 +105,22 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 			</div>
 		</div>
 	</div>
-	<div id="confirmDelete" class="modal" role="dialog">
+	<div id="confirmDelete" class="modals">
 		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
+			<div class="modal-contents-delete">
 				<div class="modal-body">
 					<p>Confirm account deletion.</p>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" id="deactivate">YES</button>
-					<button type="button" class="btn" data-dismiss="modal">No</button>
+					<button type="button" class="btn" id="deleteno">No</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="uploadimage" class="modal" role="dialog">
+	<div id="uploadimage" class="modals">
 		<div class="modal-dialog modal-sm">
-			<div class="modal-content">
+			<div class="modal-contents-delete">
 				<div class="modal-body">
 					    <form action="<%= blobstoreService.createUploadUrl("/imageupload",uploadOptions)%>" method="post" enctype="multipart/form-data">
                        <input type="file" name="profilepic">
@@ -130,13 +128,27 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
                       <input type="submit" value="upload"> 
                    </form>
 					<div class="modal-footer">
-						<button type="button" class="btn" data-dismiss="modal">Cancel</button>
+						<button type="button" class="btn" id="cancelimagemodal">Cancel</button>
 					</div>
 
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	
+	<!-- The Modal -->
+<div id="myModal" class="modals">
+
+  <!-- Modal content -->
+  <div class="modal-contents">
+    <span class="close">&times;</span>
+    <p>Confirm Entry deletion.</p><br>
+    <button type="button" class="btn btn-default" id="entrydelete">YES</button>
+	<button type="button" class="btn" id="no">No</button>
+	<input id="hideentryid" type="hidden">
+  </div>
+</div>
 
 
 <!--  main content  -->
@@ -151,8 +163,7 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
       <div  class="menus text-center" id="menus">
 
       <button  
-        class="btn btn-default dropdown" data-toggle="modal" 
-			data-target="#profiledetailsmodal">My profile</button>  
+        class="btn btn-default dropdown" onclick="mainmodal()">My profile</button>  
        
          <button id="logout" class="btn btn-default dropdown">Logout</button>
         </div>

@@ -19,11 +19,6 @@ if(!(eventid=="profilepic"||eventid=="menus"||eventid=="welcomename"))
 	  document.querySelector("#updatebtn").addEventListener("click",update);
 	  document.querySelector("#deactivate").addEventListener("click",deactivate); 
 	  document.querySelector("#logout").addEventListener("click",logout);
-	  document.getElementById("profilepics").addEventListener("click",uploadClick);
-	  function uploadClick(){
-			document.getElementById("imageupload").click();
-			return true;
-		}
 	  
 	  function deactivate(){
 		  
@@ -166,3 +161,28 @@ if(!(eventid=="profilepic"||eventid=="menus"||eventid=="welcomename"))
 	    		console.log(error); 
 	    	   }
 	      }
+	    function mainmodal()
+	    {
+	    	 var modal = document.getElementById('profiledetailsmodal'); 
+	    	 modal.style.display = "block";
+	    }
+	    function deletemodal()
+	    {
+	    	var modal = document.getElementById('confirmDelete');
+	    	 modal.style.display = "block";
+	    }
+	    document.getElementById('deleteno').onclick=function(){
+	    	var modal = document.getElementById('confirmDelete');
+	    	 modal.style.display = "none";
+	    }
+	    function imagemodal()
+	    {
+	    	var modal = document.getElementById('uploadimage'); 
+	    	 modal.style.display = "block";
+	    }
+	    
+	    document.getElementById('cancelimagemodal').onclick=function(){
+	    	var modal = document.getElementById('uploadimage'); 
+	    	 modal.style.display = "none";
+	    }
+	    

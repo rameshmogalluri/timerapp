@@ -1,0 +1,9 @@
+indexes:
+- kind: "Timer"
+  properties:
+  - name: "delete"
+    direction: asc
+  - name: "userId"
+    direction: asc
+  - name: "inTime"
+    direction: asc

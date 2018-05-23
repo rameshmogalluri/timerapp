@@ -14,7 +14,7 @@ var entrylist=document.querySelector("#entrylist");
 var sec=0;
 var min=0;
 var hrs=0;
-
+var toggleids=[]; 
 function createdaydiv(divid,intimeday,outtimeday,duration,entryid)
 {
 	 var myEle = document.getElementById(divid);
@@ -49,6 +49,7 @@ function createdaydiv(divid,intimeday,outtimeday,duration,entryid)
 	 var temp=divid+"btn";
 	 var temp1=temp.replace(/ /g,"_"); 
 	 link.id=temp1; 
+	 toggleids.push(temp1); 
 	 link.onclick = function() { buttonclick(temp1) }; 
 	 
 	 
@@ -83,6 +84,7 @@ function createdaydiv(divid,intimeday,outtimeday,duration,entryid)
 		 {
 		 span4.innerHTML="Ongoing"; 
 		 span4.id="clockoutentry";
+		 span4.classList.add("ongoingspan");
 		 }
 	 else
 		 {
@@ -224,6 +226,9 @@ function calculateduration(intime,outtime,dayformat,todaydayformat,completedstat
  }
  
  var modal = document.getElementById('myModal');
+ var modal2 = document.getElementById('profiledetailsmodal');
+ var model3=document.getElementById('confirmDelete');
+ var modal4 = document.getElementById('uploadimage');
  var span = document.getElementsByClassName("close")[0];
  span.onclick = function() {
 	    modal.style.display = "none";
@@ -237,6 +242,16 @@ function calculateduration(intime,outtime,dayformat,todaydayformat,completedstat
 	    if (event.target == modal) {
 	        modal.style.display = "none";
 	    }
+	    if (event.target == modal2) {
+	    	modal2.style.display = "none";
+	    }
+	    if (event.target == model3) {
+	    	model3.style.display = "none";
+	    }
+	    if (event.target == modal4) {
+	    	modal4.style.display = "none";
+	    }
+	    
 	}
  
  function timerentrydelete()
@@ -257,7 +272,7 @@ function calculateduration(intime,outtime,dayformat,todaydayformat,completedstat
 	        	    }
 	      }
 	    };
-	    xhr.open("DELETE",url,true);
+	    xhr.open("PUT",url,true);
 	    xhr.send();
 		
 	}
@@ -292,7 +307,14 @@ function pagereload(){
 			     	        	   document.getElementById("clockin").disabled = true;
 			     	        	   document.getElementById("clockout").disabled = false;
 			        			 }
-			        	   	 }   
+			        	   	 }
+			        	   	if(toggleids.length>1)
+			        	   		{
+			        	   	  for(i=1;i<toggleids.length;i++)
+			        	   		  {
+			        	   		$("#"+toggleids[i]).click(); 
+			        	   		  }
+			                    }
 			        	   	var todaydurationspan=document.getElementById(parsedResult.todaydate+"duration");
 			        	   	  if(todaydurationspan != null)
 			        	   		  {
@@ -332,13 +354,13 @@ function pagereload(){
 		        if(parsedResult.success){
 		        	document.querySelector("#clockin").disabled = true;
 		        	document.querySelector("#clockout").disabled = false;
-		        	
-		        	
-		        	var duration=0+" h "+0+" m"; 
-		        	document.querySelector("#entry").value=parsedResult.runningentry.id;
-        	   		createdaydiv(parsedResult.runningentry.dayformat,parsedResult.runningentry.intimeday,parsedResult.runningentry.outtimeday,duration,parsedResult.runningentry.id);
+		        	 
+		        	location.reload();
+		        	//var duration=0+" h "+0+" m"; 
+		        	//document.querySelector("#entry").value=parsedResult.runningentry.id;
+        	   		//createdaydiv(parsedResult.runningentry.dayformat,parsedResult.runningentry.intimeday,parsedResult.runningentry.outtimeday,duration,parsedResult.runningentry.id);
         	   		//timer();
-        	   		location.reload();
+        	   		
 		        }
 		        
 		      }
@@ -363,6 +385,7 @@ function pagereload(){
 		        		           
 		           var duration=calculateduration(parsedResult.clockoutentry.inTime,parsedResult.clockoutentry.outTime,parsedResult.clockoutentry.dayformat,parsedResult.clockoutentry.dayformat,parsedResult.clockoutentry.completed,""); 
 		          var clockoutspan= document.getElementById("clockoutentry").innerHTML=parsedResult.clockoutentry.outtimeday;
+		          document.getElementById("clockoutentry").classList.remove("ongoingspan"); 
 		          document.getElementById("clockoutentry").id=parsedResult.clockoutentry.outtimeday;
 		          document.getElementById(parsedResult.clockoutentry.outtimeday).nextSibling.innerHTML=duration;
 		         var parentdiv= document.getElementById(parsedResult.clockoutentry.id);

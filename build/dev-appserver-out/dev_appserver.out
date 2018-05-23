@@ -1,50 +1,60 @@
-May 22, 2018 5:51:25 PM java.util.prefs.WindowsPreferences <init>
+May 23, 2018 1:48:59 AM java.util.prefs.WindowsPreferences <init>
 WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.
-2018-05-22 17:51:25.371:INFO::main: Logging initialized @668ms
-May 22, 2018 12:21:25 PM com.google.appengine.tools.development.jetty9.JettyContainerService initContext
+2018-05-23 01:49:00.051:INFO::main: Logging initialized @685ms
+May 22, 2018 8:19:00 PM com.google.appengine.tools.development.jetty9.JettyContainerService initContext
 WARNING: Adding jar org.apache.taglibs.taglibs-standard-impl-1.2.5.jar to WEB-INF/lib. You might want to add a dependency in your project build system to avoid this warning.
-May 22, 2018 12:21:25 PM com.google.appengine.tools.development.jetty9.JettyContainerService initContext
+May 22, 2018 8:19:00 PM com.google.appengine.tools.development.jetty9.JettyContainerService initContext
 WARNING: Adding jar org.apache.taglibs.taglibs-standard-spec-1.2.5.jar to WEB-INF/lib. You might want to add a dependency in your project build system to avoid this warning.
-2018-05-22 17:51:26.349:INFO:oejs.Server:main: jetty-9.3.18.v20170406
-2018-05-22 17:51:32.274:INFO:oeja.AnnotationConfiguration:main: Scanning elapsed time=5102ms
-May 22, 2018 12:21:33 PM org.jboss.resteasy.spi.ResteasyDeployment 
+2018-05-23 01:49:01.025:INFO:oejs.Server:main: jetty-9.3.18.v20170406
+2018-05-23 01:49:06.749:INFO:oeja.AnnotationConfiguration:main: Scanning elapsed time=4898ms
+May 22, 2018 8:19:07 PM org.jboss.resteasy.spi.ResteasyDeployment 
 INFO: Deploying javax.ws.rs.core.Application: class com.timer.RestEasyConfigure
-May 22, 2018 12:21:33 PM org.jboss.resteasy.spi.ResteasyDeployment 
+May 22, 2018 8:19:07 PM org.jboss.resteasy.spi.ResteasyDeployment 
 INFO: Adding singleton resource com.timer.HelloRestEasy from Application class com.timer.RestEasyConfigure
-May 22, 2018 12:21:33 PM org.jboss.resteasy.spi.ResteasyDeployment 
+May 22, 2018 8:19:07 PM org.jboss.resteasy.spi.ResteasyDeployment 
 INFO: Adding singleton resource com.timer.Index from Application class com.timer.RestEasyConfigure
-2018-05-22 17:51:33.780:INFO:oejsh.ContextHandler:main: Started c.g.a.t.d.j.DevAppEngineWebAppContext@663411de{/,file:///C:/Users/User.FULL306-WIN/Workspace/Timerapp/build/exploded-Timerapp/,AVAILABLE}{C:\Users\User.FULL306-WIN\Workspace\Timerapp\build\exploded-Timerapp}
-2018-05-22 17:51:33.801:INFO:oejs.AbstractConnector:main: Started NetworkTrafficSelectChannelConnector@3a3e78f{HTTP/1.1,[http/1.1]}{localhost:8080}
-2018-05-22 17:51:33.804:INFO:oejs.Server:main: Started @9100ms
-May 22, 2018 12:21:33 PM com.google.appengine.tools.development.AbstractModule startup
+2018-05-23 01:49:08.236:INFO:oejsh.ContextHandler:main: Started c.g.a.t.d.j.DevAppEngineWebAppContext@5d8bafa9{/,file:///C:/Users/User.FULL306-WIN/Workspace/Timerapp/build/exploded-Timerapp/,AVAILABLE}{C:\Users\User.FULL306-WIN\Workspace\Timerapp\build\exploded-Timerapp}
+2018-05-23 01:49:08.254:INFO:oejs.AbstractConnector:main: Started NetworkTrafficSelectChannelConnector@75cd8043{HTTP/1.1,[http/1.1]}{localhost:8080}
+2018-05-23 01:49:08.256:INFO:oejs.Server:main: Started @8889ms
+May 22, 2018 8:19:08 PM com.google.appengine.tools.development.AbstractModule startup
 INFO: Module instance default is running at http://localhost:8080/
-May 22, 2018 12:21:33 PM com.google.appengine.tools.development.AbstractModule startup
+May 22, 2018 8:19:08 PM com.google.appengine.tools.development.AbstractModule startup
 INFO: The admin console is running at http://localhost:8080/_ah/admin
-May 22, 2018 5:51:33 PM com.google.appengine.tools.development.DevAppServerImpl doStart
+May 23, 2018 1:49:08 AM com.google.appengine.tools.development.DevAppServerImpl doStart
 INFO: Dev App Server is now running
-May 22, 2018 5:51:53 PM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+May 23, 2018 1:49:16 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-bold-webfont.woff2
+May 23, 2018 1:49:16 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-bold-webfont.woff
+May 23, 2018 1:49:21 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-regular-webfont.woff2
+May 23, 2018 1:49:21 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-regular-webfont.woff
+May 23, 2018 1:49:25 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-bold-webfont.woff2
+May 23, 2018 1:49:25 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-bold-webfont.woff
+May 23, 2018 1:49:26 AM com.google.appengine.api.datastore.dev.LocalDatastoreService init
 INFO: Local Datastore initialized: 
 	Type: High Replication
 	Storage: D:/temp/local_db.bin
-May 22, 2018 5:51:53 PM com.google.appengine.api.datastore.dev.LocalDatastoreService load
-INFO: Time to load datastore: 104 ms
-May 22, 2018 5:51:54 PM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-bold-webfont.woff2
-May 22, 2018 5:51:54 PM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 23, 2018 1:49:26 AM com.google.appengine.api.datastore.dev.LocalDatastoreService load
+INFO: Time to load datastore: 92 ms
+May 23, 2018 1:49:37 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-regular-webfont.woff2
-May 22, 2018 5:51:54 PM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-bold-webfont.woff
-May 22, 2018 5:51:54 PM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 23, 2018 1:49:37 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-regular-webfont.woff
-May 22, 2018 5:51:57 PM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 23, 2018 1:49:57 AM com.google.appengine.api.datastore.dev.LocalDatastoreService$11 run
+INFO: Time to persist datastore: 79 ms
+May 23, 2018 1:50:19 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-bold-webfont.woff2
-May 22, 2018 5:51:57 PM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-regular-webfont.woff2
-May 22, 2018 5:51:57 PM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 23, 2018 1:50:19 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-bold-webfont.woff
-May 22, 2018 5:51:57 PM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 23, 2018 1:50:35 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-regular-webfont.woff2
+May 23, 2018 1:50:35 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-regular-webfont.woff
-May 22, 2018 5:52:23 PM com.google.appengine.api.datastore.dev.LocalDatastoreService$11 run
-INFO: Time to persist datastore: 47 ms
-May 22, 2018 5:53:23 PM com.google.appengine.api.datastore.dev.LocalDatastoreService$11 run
-INFO: Time to persist datastore: 62 ms
+May 23, 2018 1:50:39 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-bold-webfont.woff2
+May 23, 2018 1:50:39 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-bold-webfont.woff

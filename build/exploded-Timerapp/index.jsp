@@ -74,7 +74,9 @@ if(session.getAttribute("user") != null)
         <button type="button"  class="btn buttons" id="signinbutton">SIGNIN</button> 
         <button type="reset"  class="btn buttons" >CLEAR</button>
       </div>
-      
+         <div  class="form-group">
+           <a href="forgotpassword.jsp" style="margin-left:20px">Forgot Password?</a>
+         </div>
         <!--  <div class="g-signin2" data-onsuccess="onSignIn"></div> --> 
        <br>
        
@@ -84,8 +86,7 @@ if(session.getAttribute("user") != null)
     </div>
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>  
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
     <script src="/js/register.js"> 
      </script>
   </body>

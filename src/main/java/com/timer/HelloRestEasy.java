@@ -129,54 +129,9 @@ public class HelloRestEasy {
 	{
 		JSONObject result =new JSONObject();
 		
-		HttpTransport transport=new UrlFetchTransport();
-		JsonFactory jsonFactory=new JacksonFactory();
+						  
 		
-		GoogleIdTokenVerifier verifier = new GoogleIdTokenVerifier.Builder(transport, jsonFactory)
-			    .setAudience(Collections.singletonList("396012987819-mq6f3iqjj7co9gsel1dbcq9mf8m208h8.apps.googleusercontent.com")).build();
-		
-		GoogleIdToken idToken = verifier.verify(idtoken); 
-		
-		if (idToken != null) {
-			  Payload payload = idToken.getPayload();
-
-			  // Print user identifier
-			  String userId = payload.getSubject();
-
-			  // Get profile information from payload
-			  String email = payload.getEmail();
-			  boolean emailVerified = Boolean.valueOf(payload.getEmailVerified());
-			  String name = (String) payload.get("name");
-			  String pictureUrl = (String) payload.get("picture"); 
-			  String locale = (String) payload.get("locale");
-			  
-			  HttpSession session=request.getSession();
-			  
-			  Contact results = ofy().load().type(Contact.class).filter("email",email).first().now(); 
-			  
-			  if(results == null)
-			  {
-				  Contact user= new Contact(name,email,null,locale,null);  
-				  user.setProfileurl(pictureUrl);  
-				  ofy().save().entity(user).now(); 
-				  session.setAttribute("user",user); 
-			  }
-			  else
-			  {
-				  session.setAttribute("user",results);   
-			  }
-			  
-			  result.put("success", true);
-			  result.put("message","successfully loged in");
-			  response.setContentType("application/json");
-			  return result;
-
-			} else {
-				result.put("success", false);
-				  result.put("message","Invalid token");
-				  response.setContentType("application/json");
-				  return result;
-			}
+		return result;	
 	}
 	@SuppressWarnings("unchecked")
 	@PUT
@@ -412,7 +367,7 @@ public class HelloRestEasy {
 	     TimeZone tz=TimeZone.getDefault();
 	     day.setTimeZone(tz); 
 	     String today=day.format(d);
-List<Timer> timerInfoList = ofy().load().type(Timer.class).filter("userId", Long.parseLong(userid)).filter("inTime >",sun.getTime()).list();
+List<Timer> timerInfoList = ofy().load().type(Timer.class).filter("userId", Long.parseLong(userid)).filter("inTime >",sun.getTime()).filter("delete",false).list(); 
 	   
 	   for(Timer t:timerInfoList)
 	   {
@@ -425,18 +380,20 @@ List<Timer> timerInfoList = ofy().load().type(Timer.class).filter("userId", Long
 	   
 	   return Response.status(200).entity(timeentry).build(); 
       }
-   @SuppressWarnings("unchecked")
-   @DELETE
+   @SuppressWarnings({ "unchecked", "unused" })
+   @PUT
    @Produces("application/json")
    @Path("/timerentry/delete/{entryid}") 
-	public JSONObject clockinjs(@PathParam("entryid") String entryid){  	
+	public JSONObject deleteentry(@PathParam("entryid") String entryid){  	
 	   JSONObject result=new JSONObject();
 	   
 	   Long entryids=Long.parseLong(entryid);
        Timer t=ofy().load().type(Timer.class).id(entryids).now();
+       t.setDelete(true);  
+       
        if(t!=null)
        {
-       ofy().delete().entity(t).now();
+    	   ofy().save().entity(t).now(); 
        result.put("success", true); 
        result.put("message","Successfully deleted");
        }  

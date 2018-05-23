@@ -27,6 +27,8 @@ public class Timer {
 	private Long outTime;
 	@Index
 	private Boolean completed;
+	@Index
+	private Boolean delete;
 	
 	@Ignore
 	private String intimeday;
@@ -40,7 +42,15 @@ public class Timer {
 		this.userId = userId;
 		this.inTime = inTime;
 		this.completed=false;
+		this.delete=false;
 		//this.intimeday=time.format(inTime);
+	}
+	
+	public Boolean getDelete() {
+		return delete;
+	}
+	public void setDelete(Boolean delete) {
+		this.delete = delete;
 	}
 	public Long getUserId() {
 		return userId;
