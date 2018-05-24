@@ -32,6 +32,8 @@ dependencies {
 // https://mvnrepository.com/artifact/org.jboss.resteasy/resteasy-jaxrs
 compile group: 'org.jboss.resteasy', name: 'resteasy-jaxrs', version: '3.0.6.Final'
 
+compile group: 'org.jboss.resteasy', name: 'resteasy-client', version: '3.0.6.Final'
+
 // https://mvnrepository.com/artifact/com.googlecode.objectify/objectify
 compile group: 'com.googlecode.objectify', name: 'objectify', version: '5.0'
 
@@ -54,7 +56,6 @@ compile group: 'com.google.api-client', name: 'google-api-client', version: '1.2
 
 compile group: 'com.google.api-client', name: 'google-api-client-servlet', version: '1.23.0'
 
-compile group: 'com.google.api-client', name: 'google-api-client-appengine', version: '1.23.0'
 
 compile group: 'com.google.api-client', name: 'google-api-client-gson', version: '1.23.0'
 
@@ -82,8 +83,8 @@ appengineStage.dependsOn test
 appengine {  // App Engine tasks configuration
 
 run {      // local (dev_appserver) configuration (standard environments only)
-    port = 8080  
-                  
+    port = 8080
+                   
    jvmFlags = ["-Ddatastore.backing_store=\"D:/temp/local_db.bin\""]
    
 

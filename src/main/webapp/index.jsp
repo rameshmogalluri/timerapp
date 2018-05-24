@@ -7,7 +7,7 @@ if(session.getAttribute("user") != null)
 	response.sendRedirect("/welcome.jsp"); 
 %>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" itemscope itemtype="http://schema.org/Article">
   <head>
     <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
     <meta name="google-signin-client_id" content="396012987819-mq6f3iqjj7co9gsel1dbcq9mf8m208h8.apps.googleusercontent.com">
@@ -15,10 +15,24 @@ if(session.getAttribute("user") != null)
       
      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet"  href="style.css" />
+  
   </head>
   <body>
     <div class="maindiv">
-       <br>                
+       <br> 
+       <%
+          String msg=request.getParameter("signinerror");
+       %>   
+         <p  id="gsigninerror" class="error">
+         <%
+            if(msg!=null)
+            {
+         %>
+         <%=msg %>
+         <%   
+            }
+         %>
+      </p>            
         <p  id="signinerror" class="error">
       </p>
       <p  class="error" id="signuperror">
@@ -77,7 +91,7 @@ if(session.getAttribute("user") != null)
          <div  class="form-group">
            <a href="forgotpassword.jsp" style="margin-left:20px">Forgot Password?</a>
          </div>
-        <!--  <div class="g-signin2" data-onsuccess="onSignIn"></div> --> 
+       <div class="g-signin2" id="GoogleSigninButton" style="margin-left:20px"></div> 
        <br>
        
     </div>
@@ -87,6 +101,8 @@ if(session.getAttribute("user") != null)
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
+  </script>
     <script src="/js/register.js"> 
      </script>
   </body>

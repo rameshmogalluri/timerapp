@@ -344,9 +344,9 @@ function pagereload(){
 
 
  function clockin(){  
+	 var timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
 	 var xhr= new XMLHttpRequest();
 	 var url="/user/clockin/"+id;
-	        
 	 xhr.onload = function() {   
 		    if (this.readyState == 4 && this.status == 200) {
 		        var result = xhr.response;

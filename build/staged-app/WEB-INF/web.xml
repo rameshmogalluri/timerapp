@@ -25,8 +25,18 @@
  <!-- JSPC servlet mappings start -->
 
     <servlet>
+        <servlet-name>org.apache.jsp.forgotpassword_jsp</servlet-name>
+        <servlet-class>org.apache.jsp.forgotpassword_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
         <servlet-name>org.apache.jsp.index_jsp</servlet-name>
         <servlet-class>org.apache.jsp.index_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.apache.jsp.resetpassword_jsp</servlet-name>
+        <servlet-class>org.apache.jsp.resetpassword_jsp</servlet-class>
     </servlet>
 
     <servlet>
@@ -35,8 +45,18 @@
     </servlet>
 
     <servlet-mapping>
+        <servlet-name>org.apache.jsp.forgotpassword_jsp</servlet-name>
+        <url-pattern>/forgotpassword.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
         <servlet-name>org.apache.jsp.index_jsp</servlet-name>
         <url-pattern>/index.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.jsp.resetpassword_jsp</servlet-name>
+        <url-pattern>/resetpassword.jsp</url-pattern>
     </servlet-mapping>
 
     <servlet-mapping>

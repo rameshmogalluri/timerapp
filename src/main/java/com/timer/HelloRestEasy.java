@@ -20,6 +20,7 @@ import org.json.simple.JSONObject;
 
 import static com.timer.ConfigureObjectify.ofy;
 
+import java.io.FileReader;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.text.SimpleDateFormat;
@@ -32,9 +33,11 @@ import java.util.List;
 import java.util.TimeZone;
 
 import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
+import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson.JacksonFactory;
@@ -120,19 +123,7 @@ public class HelloRestEasy {
 		}
 		
 	}
-	@SuppressWarnings({ "unchecked", "unused" })
-	@POST
-	@Path("/signinwithgoogle")
-	@Consumes("application/x-www-form-urlencoded")   
-	@Produces("application/json")
-	public JSONObject googlesignin(String idtoken,@Context HttpServletRequest request,@Context HttpServletResponse response) throws GeneralSecurityException, IOException
-	{
-		JSONObject result =new JSONObject();
-		
-						  
-		
-		return result;	
-	}
+	
 	@SuppressWarnings("unchecked")
 	@PUT
 	@Path("/update/{userid}")
@@ -276,6 +267,7 @@ public class HelloRestEasy {
 		JSONObject result=new JSONObject();
 	    HttpSession session=request.getSession();
 	    Contact loginuser=(Contact)session.getAttribute("user");
+	   
 	    if(session.getAttribute("user")!=null)
 	    {
 	    	String accId=""+loginuser.getId();
@@ -287,7 +279,11 @@ public class HelloRestEasy {
 	          Long intime=date.getTime();
 	          
 	          Timer t=new Timer(loginuser.getId(),intime); 
+	           
+	          
 	          ofy().save().entity(t).now(); 
+	          
+	          ofy().clear();
 	          
 	          result.put("success",true);
 	          result.put("runningentry",t);
@@ -319,21 +315,22 @@ public class HelloRestEasy {
 	{
 		JSONObject result=new JSONObject();
 	   
-	   
+		 ofy().clear();
 	    	
 	          Date date = new Date(); 
 	          Long outtime=date.getTime();
 	          Long entryids=Long.parseLong(entryid);
 	         
-	         
+	          
 	          
 	          Timer t=ofy().load().type(Timer.class).id(entryids).now();
+	         
 	           
 	          
 	          t.setOutTime(outtime); 
 	          t.setCompleted(true);  
 	          ofy().save().entity(t).now();  
-	           
+	          
 	         
 	          
 	          result.put("success",true);
@@ -367,6 +364,7 @@ public class HelloRestEasy {
 	     TimeZone tz=TimeZone.getDefault();
 	     day.setTimeZone(tz); 
 	     String today=day.format(d);
+	     ofy().clear();  
 List<Timer> timerInfoList = ofy().load().type(Timer.class).filter("userId", Long.parseLong(userid)).filter("inTime >",sun.getTime()).filter("delete",false).list(); 
 	   
 	   for(Timer t:timerInfoList)

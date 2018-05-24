@@ -14,7 +14,7 @@ public class Timer {
 	 public static SimpleDateFormat time=new SimpleDateFormat("hh:mm:ss a");
 	 
 	 @Ignore
-	 TimeZone tz = TimeZone.getDefault();
+	 TimeZone tz=TimeZone.getTimeZone("IST"); 
 		
 	 
 	@Id

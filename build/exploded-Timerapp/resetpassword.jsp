@@ -24,7 +24,6 @@
          </div>
          <div class="form-group" style="margin-left:40px"> 
        <button type="button"  class="btn buttons" id="change">Change</button> 
-       <button type="reset"  class="btn buttons">Clear</button> 
        </div>
       </div>
      </div>

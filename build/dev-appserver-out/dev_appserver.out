@@ -1,60 +1,48 @@
-May 23, 2018 1:48:59 AM java.util.prefs.WindowsPreferences <init>
+May 24, 2018 10:56:17 AM java.util.prefs.WindowsPreferences <init>
 WARNING: Could not open/create prefs root node Software\JavaSoft\Prefs at root 0x80000002. Windows RegCreateKeyEx(...) returned error code 5.
-2018-05-23 01:49:00.051:INFO::main: Logging initialized @685ms
-May 22, 2018 8:19:00 PM com.google.appengine.tools.development.jetty9.JettyContainerService initContext
-WARNING: Adding jar org.apache.taglibs.taglibs-standard-impl-1.2.5.jar to WEB-INF/lib. You might want to add a dependency in your project build system to avoid this warning.
-May 22, 2018 8:19:00 PM com.google.appengine.tools.development.jetty9.JettyContainerService initContext
-WARNING: Adding jar org.apache.taglibs.taglibs-standard-spec-1.2.5.jar to WEB-INF/lib. You might want to add a dependency in your project build system to avoid this warning.
-2018-05-23 01:49:01.025:INFO:oejs.Server:main: jetty-9.3.18.v20170406
-2018-05-23 01:49:06.749:INFO:oeja.AnnotationConfiguration:main: Scanning elapsed time=4898ms
-May 22, 2018 8:19:07 PM org.jboss.resteasy.spi.ResteasyDeployment 
+2018-05-24 10:56:17.854:INFO::main: Logging initialized @571ms
+2018-05-24 10:56:18.734:INFO:oejs.Server:main: jetty-9.3.18.v20170406
+2018-05-24 10:56:23.949:INFO:oeja.AnnotationConfiguration:main: Scanning elapsed time=4598ms
+May 24, 2018 5:26:25 AM org.jboss.resteasy.spi.ResteasyDeployment 
 INFO: Deploying javax.ws.rs.core.Application: class com.timer.RestEasyConfigure
-May 22, 2018 8:19:07 PM org.jboss.resteasy.spi.ResteasyDeployment 
-INFO: Adding singleton resource com.timer.HelloRestEasy from Application class com.timer.RestEasyConfigure
-May 22, 2018 8:19:07 PM org.jboss.resteasy.spi.ResteasyDeployment 
+May 24, 2018 5:26:25 AM org.jboss.resteasy.spi.ResteasyDeployment 
 INFO: Adding singleton resource com.timer.Index from Application class com.timer.RestEasyConfigure
-2018-05-23 01:49:08.236:INFO:oejsh.ContextHandler:main: Started c.g.a.t.d.j.DevAppEngineWebAppContext@5d8bafa9{/,file:///C:/Users/User.FULL306-WIN/Workspace/Timerapp/build/exploded-Timerapp/,AVAILABLE}{C:\Users\User.FULL306-WIN\Workspace\Timerapp\build\exploded-Timerapp}
-2018-05-23 01:49:08.254:INFO:oejs.AbstractConnector:main: Started NetworkTrafficSelectChannelConnector@75cd8043{HTTP/1.1,[http/1.1]}{localhost:8080}
-2018-05-23 01:49:08.256:INFO:oejs.Server:main: Started @8889ms
-May 22, 2018 8:19:08 PM com.google.appengine.tools.development.AbstractModule startup
+May 24, 2018 5:26:25 AM org.jboss.resteasy.spi.ResteasyDeployment 
+INFO: Adding singleton resource com.timer.HelloRestEasy from Application class com.timer.RestEasyConfigure
+2018-05-24 10:56:25.583:INFO:oejsh.ContextHandler:main: Started c.g.a.t.d.j.DevAppEngineWebAppContext@1e0f9063{/,file:///C:/Users/User.FULL306-WIN/Workspace/Timerapp/build/exploded-Timerapp/,AVAILABLE}{C:\Users\User.FULL306-WIN\Workspace\Timerapp\build\exploded-Timerapp}
+2018-05-24 10:56:25.618:INFO:oejs.AbstractConnector:main: Started NetworkTrafficSelectChannelConnector@550a1967{HTTP/1.1,[http/1.1]}{localhost:8080}
+2018-05-24 10:56:25.618:INFO:oejs.Server:main: Started @8335ms
+May 24, 2018 5:26:25 AM com.google.appengine.tools.development.AbstractModule startup
 INFO: Module instance default is running at http://localhost:8080/
-May 22, 2018 8:19:08 PM com.google.appengine.tools.development.AbstractModule startup
+May 24, 2018 5:26:25 AM com.google.appengine.tools.development.AbstractModule startup
 INFO: The admin console is running at http://localhost:8080/_ah/admin
-May 23, 2018 1:49:08 AM com.google.appengine.tools.development.DevAppServerImpl doStart
+May 24, 2018 10:56:25 AM com.google.appengine.tools.development.DevAppServerImpl doStart
 INFO: Dev App Server is now running
-May 23, 2018 1:49:16 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 24, 2018 10:56:43 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-bold-webfont.woff2
-May 23, 2018 1:49:16 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-bold-webfont.woff
-May 23, 2018 1:49:21 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 24, 2018 10:56:43 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-regular-webfont.woff2
-May 23, 2018 1:49:21 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-regular-webfont.woff
-May 23, 2018 1:49:25 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-bold-webfont.woff2
-May 23, 2018 1:49:25 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 24, 2018 10:56:43 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-bold-webfont.woff
-May 23, 2018 1:49:26 AM com.google.appengine.api.datastore.dev.LocalDatastoreService init
+May 24, 2018 10:56:43 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-regular-webfont.woff
+May 24, 2018 10:56:52 AM com.google.appengine.api.datastore.dev.LocalDatastoreService init
 INFO: Local Datastore initialized: 
 	Type: High Replication
 	Storage: D:/temp/local_db.bin
-May 23, 2018 1:49:26 AM com.google.appengine.api.datastore.dev.LocalDatastoreService load
-INFO: Time to load datastore: 92 ms
-May 23, 2018 1:49:37 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-regular-webfont.woff2
-May 23, 2018 1:49:37 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-regular-webfont.woff
-May 23, 2018 1:49:57 AM com.google.appengine.api.datastore.dev.LocalDatastoreService$11 run
-INFO: Time to persist datastore: 79 ms
-May 23, 2018 1:50:19 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 24, 2018 10:56:52 AM com.google.appengine.api.datastore.dev.LocalDatastoreService load
+INFO: Time to load datastore: 93 ms
+May 24, 2018 10:57:22 AM com.google.appengine.api.datastore.dev.LocalDatastoreService$11 run
+INFO: Time to persist datastore: 114 ms
+May 24, 2018 10:59:01 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-bold-webfont.woff2
-May 23, 2018 1:50:19 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-bold-webfont.woff
-May 23, 2018 1:50:35 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 24, 2018 10:59:01 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-regular-webfont.woff2
-May 23, 2018 1:50:35 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-regular-webfont.woff
-May 23, 2018 1:50:39 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
-WARNING: No file found for: /fonts/opensans-bold-webfont.woff2
-May 23, 2018 1:50:39 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+May 24, 2018 10:59:01 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
 WARNING: No file found for: /fonts/opensans-bold-webfont.woff
+May 24, 2018 10:59:01 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-regular-webfont.woff
+May 24, 2018 10:59:06 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-regular-webfont.woff2
+May 24, 2018 10:59:06 AM com.google.appengine.tools.development.jetty9.LocalResourceFileServlet doGet
+WARNING: No file found for: /fonts/opensans-regular-webfont.woff

@@ -191,7 +191,8 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
             </div>
          </div>
 </div>
-  <script src=".//js/dashboard.js"></script> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> 
+   <script src=".//js/dashboard.js"></script> 
   <script src=".//js/timer.js"></script> 
 </body>
 </html>
