@@ -1,8 +1,8 @@
-<!-- Indices written at Thu, 24 May 2018 10:56:53 IST -->
+<!-- Indices written at Thu, 24 May 2018 19:47:16 IST -->
 
 <datastore-indexes>
 
-    <!-- Used 1 time in query history -->
+    <!-- Used 6 times in query history -->
     <datastore-index kind="Timer" ancestor="false" source="auto">
         <property name="delete" direction="asc"/>
         <property name="userId" direction="asc"/>

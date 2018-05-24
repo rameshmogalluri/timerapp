@@ -30,7 +30,16 @@ public class Contact implements Serializable {
    
    private String profileurl;
    
-   public Contact() {}
+   @Index
+   private String resetString;
+   
+   public Contact() {} 
+   
+   public Contact(String password)
+   {
+	   this.password=password;
+   }
+   
    public Contact(String name,String mobileNumber,String address)
      {
 	   this.name = name;
@@ -38,9 +47,7 @@ public class Contact implements Serializable {
        this.address=address;
        
      }
-    public Long getId() {
-	return id;
-}
+   
 	public Contact(String name, String email,  String mobileNumber,String address,String password) {
        this.name = name;
        this.email = email;
@@ -48,9 +55,19 @@ public class Contact implements Serializable {
        this.address=address;
        this.password = password;
        this.profileurl=null;
+       this.resetString=null;
        this.active=true;
      }
-    public void setProfileurl(String profileurl)
+	 public Long getId() {
+			return id;
+		}
+    public String getResetString() {
+		return resetString;
+	}
+	public void setResetString(String resetString) {
+		this.resetString = resetString;
+	}
+	public void setProfileurl(String profileurl)
     {
     	this.profileurl=profileurl;
     }

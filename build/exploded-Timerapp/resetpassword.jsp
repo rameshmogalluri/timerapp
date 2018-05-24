@@ -9,7 +9,14 @@
     <link rel="stylesheet"  href="style.css" />
 </head>
 <body>
+   <%
+     String rendstring=request.getParameter("randstring"); 
+   %>
 <div class="maindiv">
+<p  id="pwdmsg" class="error">      
+ </p>
+ <p  id="success" class="successmsg"> 
+      </p>
      <div class="innerdiv">
      
       <div style="margin-left:170px;margin-top:40px">
@@ -17,16 +24,19 @@
            <span>Enter new Password to reset your password</span>
          </div>
          <div class="form-group" style="margin-left:40px">
-            <input type="password"  id="password" placeholder=" Password*" required name="password">
+            <input type="password"  id="password" placeholder=" Password*"  name="password">
          </div>
          <div class="form-group" style="margin-left:40px">
-            <input type="password"  id="cnfpassword" placeholder="Conform Password*" required name="cnfpassword">
+            <input type="password"  id="cnfpassword" placeholder="Conform Password*"  name="cnfpassword">
          </div>
          <div class="form-group" style="margin-left:40px"> 
        <button type="button"  class="btn buttons" id="change">Change</button> 
+       <input type="hidden" value="<%=rendstring%>" id="randstring">    
        </div>
       </div>
      </div>
 </div>
+     <script src="/js/changepassword.js"> 
+     </script>
 </body>
 </html>

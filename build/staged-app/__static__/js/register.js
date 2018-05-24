@@ -141,6 +141,6 @@ function register()
 		 +"redirect_uri=https://timerapp-204808.appspot.com/signinwithgoogle&"
 		 +"response_type=code&"
 		 +"client_id=280361308016-ebcqotaemi6n5k5gj6rn1fuju5jv9fdg.apps.googleusercontent.com"
-		location.href=url;
+		window.location=url;
  }
  

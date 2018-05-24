@@ -91,7 +91,10 @@ if(session.getAttribute("user") != null)
          <div  class="form-group">
            <a href="forgotpassword.jsp" style="margin-left:20px">Forgot Password?</a>
          </div>
-       <div class="g-signin2" id="GoogleSigninButton" style="margin-left:20px"></div> 
+      <!-- <button id="GoogleSigninButton" style="margin-left:20px">Google SignIn</button>   -->
+        <a id="GoogleSigninButton" style="cursor: pointer;"><img
+        src="google.png" 
+		style="width: 200px; margin-bottom: 12px; height: 46px; border-radius: 44px;"></a> 
        <br>
        
     </div>
@@ -101,8 +104,6 @@ if(session.getAttribute("user") != null)
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
-  <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer>
-  </script>
     <script src="/js/register.js"> 
      </script>
   </body>

@@ -10,9 +10,12 @@
 </head>
 <body>
 <div class="maindiv">
+<p  id="emailerror" class="error">
+<p  id="success" class="successmsg"> 
+      </p>
      <div class="innerdiv">
      
-      <div style="margin-left:170px;margin-top:40px">
+      <div style="margin-left:170px;margin-top:40px">  
          <div class="form-group">
            <span>Enter your email address to reset your password</span>
          </div>

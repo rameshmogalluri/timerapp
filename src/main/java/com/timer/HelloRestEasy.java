@@ -1,11 +1,20 @@
 package com.timer;
 
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -20,27 +29,17 @@ import org.json.simple.JSONObject;
 
 import static com.timer.ConfigureObjectify.ofy;
 
-import java.io.FileReader;
+
 import java.io.IOException;
-import java.security.GeneralSecurityException;
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 import java.util.TimeZone;
 
-import com.google.api.client.extensions.appengine.http.UrlFetchTransport;
-import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken.Payload;
-import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
-import com.google.api.client.googleapis.auth.oauth2.GoogleTokenResponse;
-import com.google.api.client.http.HttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson.JacksonFactory;
 
 
 @Path("/user") 
@@ -280,10 +279,12 @@ public class HelloRestEasy {
 	          
 	          Timer t=new Timer(loginuser.getId(),intime); 
 	           
+	         
 	          
 	          ofy().save().entity(t).now(); 
-	          
 	          ofy().clear();
+	          
+	         
 	          
 	          result.put("success",true);
 	          result.put("runningentry",t);
@@ -315,22 +316,20 @@ public class HelloRestEasy {
 	{
 		JSONObject result=new JSONObject();
 	   
-		 ofy().clear();
+		
 	    	
 	          Date date = new Date(); 
 	          Long outtime=date.getTime();
 	          Long entryids=Long.parseLong(entryid);
 	         
-	          
+	          ofy().clear(); 
 	          
 	          Timer t=ofy().load().type(Timer.class).id(entryids).now();
-	         
-	           
-	          
 	          t.setOutTime(outtime); 
 	          t.setCompleted(true);  
-	          ofy().save().entity(t).now();  
+	          ofy().save().entity(t).now(); 
 	          
+	         
 	         
 	          
 	          result.put("success",true);
@@ -402,6 +401,91 @@ List<Timer> timerInfoList = ofy().load().type(Timer.class).filter("userId", Long
        }
 	   return result;
 	 }
+   @SuppressWarnings({ "unchecked", "unused" })
+   @GET
+   @Produces("application/json") 
+   @Path("/sendmail/{email}")   
+   public JSONObject sendMail(@PathParam("email") String email)   throws AddressException,MessagingException,UnsupportedEncodingException
+   {
+	  JSONObject result=new JSONObject();
+	  Contact results = ofy().load().type(Contact.class).filter("email",email).first().now();
+	  String usermail=results.getEmail();
+	  String name=results.getName();
+	  if(results == null)
+	  {
+		  result.put("Success",false);
+		  result.put("message","Your entered Email Id is doesn't  Exist");
+	  }
+	  else
+	  {
+		  String randomAlphaNumericString=randdomString();
+		  results.setResetString(randomAlphaNumericString); 
+		  ofy().save().entity(results).now(); 
+		  Properties props = new Properties();
+		  Session session = Session.getDefaultInstance(props, null);
+
+		   
+		    String htmlBody = "<html><a href='https://timerapp-204808.appspot.com/resetpassword.jsp?randstring="+randomAlphaNumericString+"'>Plese click here to reset your password</a></html>";         
+		    Multipart mp = new MimeMultipart();
+
+		    MimeBodyPart htmlPart = new MimeBodyPart();
+		    htmlPart.setContent(htmlBody, "text/html");
+		    mp.addBodyPart(htmlPart);
+		 
+		    Message msg = new MimeMessage(session);
+		    msg.setContent(mp);
+		    msg.setFrom(new InternetAddress("ramesh.subbarao@anywhere.co", "TimerApp.com Admin"));
+		    msg.addRecipient(Message.RecipientType.TO,
+		                   new InternetAddress(usermail, "Mr."+name)); 
+		    msg.setSubject("TimerApp - Reset Password "); 
+		   
+		    Transport.send(msg);   
+		  
+		  result.put("Success",true);
+		  result.put("message","Reset Password link is sent to your email Id");  
+	  }
+	  return result;
+   }
+   protected String randdomString() {
+       String randchars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+       StringBuilder chars = new StringBuilder();
+       Random rnd = new Random();
+       while (chars.length() < 18) { // length of the random string.
+           int index = (int) (rnd.nextFloat() * randchars.length());
+           chars.append(randchars.charAt(index));
+       }
+       String randomstring = chars.toString();
+       return randomstring;
+
+   }
+   @SuppressWarnings( "unchecked")
+   @POST
+   @Consumes("application/json")
+   @Produces("application/json")  
+   @Path("/resetpassword/{randstring}")   
+   public JSONObject resetpassword(@PathParam("randstring") String randString,Contact password)
+   {
+	   JSONObject result=new JSONObject();
+	   Contact results = ofy().load().type(Contact.class).filter("resetString",randString).first().now();
+	   if(results == null)
+	   {
+		   result.put("success",false);
+		   result.put("message","Your link is expired");
+	   }
+	   else
+	   {
+		   results.setPassword(password.getPassword()); 
+		   results.setResetString(null); 
+		   
+		   ofy().save().entity(results).now();
+		   
+		   result.put("success", true);
+		   result.put("message","Your password is changed successfully.Your page will redirect to login Page automatically");
+	   }
+	   
+	   return result;
+	   
+   }
  }
 
 

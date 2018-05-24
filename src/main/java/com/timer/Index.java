@@ -4,9 +4,9 @@ import static com.timer.ConfigureObjectify.ofy;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
-import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +38,7 @@ import javax.ws.rs.Path;
 
 @Path("/")
 public class Index {
+	private static Logger logger = Logger.getLogger("com.timer.Index");
 	private BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
 	@GET
 	@Produces(MediaType.TEXT_HTML)
@@ -74,10 +75,10 @@ public class Index {
 	}
 	    
 	@SuppressWarnings("unused")
-	@GET
+	@GET 
 	@Path("/signinwithgoogle") 
 	@Produces(MediaType.TEXT_HTML)
-	public Response googlesignin(@QueryParam("code") String oauthcode, @QueryParam("error") String error,@Context HttpServletRequest request,@Context HttpServletResponse response) throws GeneralSecurityException, IOException,URISyntaxException, ServletException, ParseException, org.json.simple.parser.ParseException
+	public Response googlesignin(@QueryParam("code") String oauthcode, @QueryParam("error") String error,@Context HttpServletRequest request,@Context HttpServletResponse response) throws GeneralSecurityException, IOException,URISyntaxException, ServletException, org.json.simple.parser.ParseException
 	{
 		JSONObject result =new JSONObject();
 		
@@ -86,10 +87,12 @@ public class Index {
         
 		java.net.URI index = new java.net.URI("/index.jsp?signinerror=Invalid%20User");
 		
+		java.net.URI index1 = new java.net.URI("/index.jsp?signinerror=Invalid%20u"); 
+		java.net.URI index3 = new java.net.URI("/index.jsp?signinerror=Your%20account%20is%20deactivated");
 		java.net.URI location = new java.net.URI("/index.jsp");
 
 		if (error != null) {
-			    return Response.temporaryRedirect(index).build();
+			    return Response.temporaryRedirect(index1).build();
 
 		}
 		else {
@@ -130,17 +133,28 @@ public class Index {
 					
 					json = (JSONObject) parser.parse(user);
 					
-					Contact login = ofy().load().type(Contact.class).filter("email", json.get("email")).first().now();
+					String email=(String) json.get("email");
 					
-					if (login == null)
+					Contact results = ofy().load().type(Contact.class).filter("email",email).first().now();
+					HttpSession session =request.getSession();
+					
+					logger.info(email);
+					logger.info(results.getEmail()); 
+					
+					if (results == null)
 					{
-						HttpSession session =request.getSession();
 						session.invalidate();
 				         return Response.temporaryRedirect(index).build();
 					}
+					else if(!results.getActive())
+					{
+						
+						session.invalidate();
+				         return Response.temporaryRedirect(index3).build(); 
+					}
 					else {
-						HttpSession session = request.getSession();
-						session.setAttribute("user", login);
+						
+						session.setAttribute("user", results);
 						 return Response.temporaryRedirect(location).build();
 
 					}
