@@ -7,12 +7,13 @@ function sendmail()
 	if(!emailregex.test(email))
 	  {
 	  document.querySelector("#emailerror").innerHTML="Please enter valid email";
-	  setTimeout(function(){ document.querySelector("#emailerror").innerHTML=""}, 1000);
+	  setTimeout(function(){ document.querySelector("#emailerror").innerHTML=""}, 4000);
+	  document.querySelector("#email").classList.add("invalidtextboxes");
 	  return false;
 	  }
 	var method="GET";  
 	var url="/user/sendmail/"+email;  
-	var xhr=new XMLHttpRequest();
+	var xhr=new XMLHttpRequest(); 
     xhr.open(method,url,true);
     xhr.onload=function(){
     	if (xhr.readyState == 4 && xhr.status == 200) {
@@ -27,10 +28,14 @@ function sendmail()
 	    	 else
 	    		{
 	    		 document.querySelector("#emailerror").innerHTML=jsonResponse.message;
-	    		  setTimeout(function(){ document.querySelector("#emailerror").innerHTML=""}, 1000);
+	    		  setTimeout(function(){ document.querySelector("#emailerror").innerHTML=""}, 4000);
 	    		
 	    		}
 	   } 
     }
    	xhr.send();  
 }
+function keypress(id){
+ 	document.querySelector("#"+id).classList.remove("invalidtextboxes");	
+ }
+ 

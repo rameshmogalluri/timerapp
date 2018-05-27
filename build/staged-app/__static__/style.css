@@ -85,8 +85,21 @@ input
     margin-left:250px;
     color:#FF0000;
   }
+  .pwderror
+  {
+    margin-left:200px;
+    color:#FF0000;
+  }
  .successmsg
  {
    margin-left:180px;   
     color:green;  
+ }
+ .successmsgreset{
+ margin-left:50px;   
+    color:green; 
+ }
+ .invalidtextboxes
+ {
+    border:1px red solid;
  }

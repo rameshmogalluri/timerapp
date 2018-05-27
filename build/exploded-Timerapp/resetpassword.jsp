@@ -15,7 +15,7 @@
 <div class="maindiv">
 <p  id="pwdmsg" class="error">      
  </p>
- <p  id="success" class="successmsg"> 
+ <p  id="success" class="successmsgreset"> 
       </p>
      <div class="innerdiv">
      
@@ -24,10 +24,10 @@
            <span>Enter new Password to reset your password</span>
          </div>
          <div class="form-group" style="margin-left:40px">
-            <input type="password"  id="password" placeholder=" Password*"  name="password">
+            <input type="password"  id="password" placeholder=" Password*"  name="password" onkeypress="keypress(this.id)">
          </div>
          <div class="form-group" style="margin-left:40px">
-            <input type="password"  id="cnfpassword" placeholder="Conform Password*"  name="cnfpassword">
+            <input type="password"  id="cnfpassword" placeholder="Conform Password*"  name="cnfpassword" onkeypress="keypress(this.id)">
          </div>
          <div class="form-group" style="margin-left:40px"> 
        <button type="button"  class="btn buttons" id="change">Change</button> 

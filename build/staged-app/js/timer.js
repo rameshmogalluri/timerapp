@@ -125,7 +125,13 @@ var dayhrs=0;
 var daymin=0;
 var tempdayformat;
 var tempdayformat1;
+
+
+
 function calculateduration(intime,outtime,dayformat,todaydayformat,completedstatus,currentdate){
+	var seconds=document.querySelector("#lblsec");
+	var minutes=document.querySelector("#lblmin");
+	var hours=document.querySelector("#lblhr"); 
 	tempdayformat=dayformat;
 	
 	  if(!completedstatus)
@@ -146,7 +152,10 @@ function calculateduration(intime,outtime,dayformat,todaydayformat,completedstat
 		 temphours="0"+temphours;
 	 if(tempminutes<=9)
 		 tempminutes="0"+tempminutes;
-	 var duration=temphours+" h "+tempminutes+" m"
+	 var duration=temphours+"  h  "+tempminutes+" m"
+	 
+	   if(currentdate != "clockout")
+		{
 	
 	if(dayformat === todaydayformat)
 		{ 
@@ -180,6 +189,16 @@ function calculateduration(intime,outtime,dayformat,todaydayformat,completedstat
 		    			 hours.innerHTML=todayhrs;  
 		    	 
 		}
+	}
+	   else {
+		  var id=dayformat+"duration";
+		  var hours=hours.innerHTML;
+		  var minutes=minutes.innerHTML;
+		 var temp= document.getElementById(id);
+		 if(temp!=null)
+		 temp.innerHTML=hours+" h"+minutes+" m";
+		 
+	   }
 	
 	if(tempdayformat!=tempdayformat1){
 		 dayOverallhrs=0;
@@ -233,7 +252,9 @@ function calculateduration(intime,outtime,dayformat,todaydayformat,completedstat
  span.onclick = function() {
 	    modal.style.display = "none";
 	}
+ 
  var no=document.getElementById('no');
+ 
  no.onclick = function() {
 	    modal.style.display = "none";
 	} 
@@ -344,7 +365,7 @@ function pagereload(){
 
 
  function clockin(){  
-	 var timezone=Intl.DateTimeFormat().resolvedOptions().timeZone;
+	
 	 var xhr= new XMLHttpRequest();
 	 var url="/user/clockin/"+id;
 	 xhr.onload = function() {   
@@ -383,7 +404,7 @@ function pagereload(){
 		           document.querySelector("#clockin").disabled = false;
 		           document.querySelector("#clockout").disabled = true;
 		        		           
-		           var duration=calculateduration(parsedResult.clockoutentry.inTime,parsedResult.clockoutentry.outTime,parsedResult.clockoutentry.dayformat,parsedResult.clockoutentry.dayformat,parsedResult.clockoutentry.completed,""); 
+		           var duration=calculateduration(parsedResult.clockoutentry.inTime,parsedResult.clockoutentry.outTime,parsedResult.clockoutentry.dayformat,parsedResult.clockoutentry.dayformat,parsedResult.clockoutentry.completed,"clockout"); 
 		          var clockoutspan= document.getElementById("clockoutentry").innerHTML=parsedResult.clockoutentry.outtimeday;
 		          document.getElementById("clockoutentry").classList.remove("ongoingspan"); 
 		          document.getElementById("clockoutentry").id=parsedResult.clockoutentry.outtimeday;

@@ -172,17 +172,23 @@ if(!(eventid=="profilepic"||eventid=="menus"||eventid=="welcomename"))
 	    	 modal.style.display = "block";
 	    }
 	    document.getElementById('deleteno').onclick=function(){
+	    	
 	    	var modal = document.getElementById('confirmDelete');
 	    	 modal.style.display = "none";
 	    }
+	    document.querySelector("#profile").addEventListener("click",imagemodal);
 	    function imagemodal()
 	    {
-	    	var modal = document.getElementById('uploadimage'); 
-	    	 modal.style.display = "block";
+	    	var upload = document.querySelector("#file").click();  
+	    	
 	    }
 	    
-	    document.getElementById('cancelimagemodal').onclick=function(){
+	    document.getElementById("file").onchange = function() {
+	    	 document.getElementById("profiledetailsmodal").style.display="none"; 
+	        document.getElementById("form").submit();
+	    };
+	   /* document.getElementById('cancelimagemodal').onclick=function(){
 	    	var modal = document.getElementById('uploadimage'); 
 	    	 modal.style.display = "none";
-	    }
+	    }*/
 	    

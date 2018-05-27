@@ -43,10 +43,12 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 				<div class="modal-body">
 				<div id="imagediv">
 				  <img alt="User Photo" src="<%=profilepicurl%>" width="120px" height="120px" class="img-circle">   
-				   <a  href="" id="profilepics" onclick="imagemodal()">change photo</a>   
-			 <%-- <form style="display:none" action="<%= blobstoreService.createUploadUrl("/imageupload",uploadOptions)%>" method="post" enctype="multipart/form-data">
-                       <input type="file" name="profilepic" id="imageupload">
-			 </form> --%>
+				   <a  href="#" id="profile">change photo</a>  
+				    
+			 <form id="form" style="display:none" action="<%= blobstoreService.createUploadUrl("/imageupload",uploadOptions)%>" method="post" enctype="multipart/form-data">
+                       <input type="file" name="profilepic" id="file" accept="image/*">  
+                      
+                   </form> 
 				</div>
 				<button style="margin-left: 350px" type="button" id="edit"
 						class="btn btn-sm editclassB">
@@ -113,19 +115,21 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" id="deactivate">YES</button>
-					<button type="button" class="btn" id="deleteno">No</button>
+					<button type="button" class="btn btn-default" id="deleteno">No</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div id="uploadimage" class="modals">
+	
+	<%-- <div id="uploadimage" class="modals">
 		<div class="modal-dialog modal-sm">
-			<div class="modal-contents-delete">
+			<div class="modal-contents-del">
 				<div class="modal-body">
 					    <form action="<%= blobstoreService.createUploadUrl("/imageupload",uploadOptions)%>" method="post" enctype="multipart/form-data">
                        <input type="file" name="profilepic">
                         <br>
                       <input type="submit" value="upload"> 
+                      
                    </form>
 					<div class="modal-footer">
 						<button type="button" class="btn" id="cancelimagemodal">Cancel</button>
@@ -134,7 +138,7 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> --%>
 	
 	
 	<!-- The Modal -->
@@ -145,7 +149,7 @@ UploadOptions uploadOptions=Builder.withGoogleStorageBucketName("timerrestapi.ap
     <span class="close">&times;</span>
     <p>Confirm Entry deletion.</p><br>
     <button type="button" class="btn btn-default" id="entrydelete">YES</button>
-	<button type="button" class="btn" id="no">No</button>
+	<button type="button" class="btn btn-default" id="no">No</button>
 	<input id="hideentryid" type="hidden">
   </div>
 </div>

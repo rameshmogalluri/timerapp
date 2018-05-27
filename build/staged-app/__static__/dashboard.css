@@ -99,6 +99,12 @@ border-style: groove;
     padding: 20px;
     border: 1px solid #888;
 }
+.modal-contents-del{
+	background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+}
 /* Modal Content */
 .modal-contents {
     background-color: #fefefe;

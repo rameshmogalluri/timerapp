@@ -1,27 +1,23 @@
 document.querySelector("#change").addEventListener("click",changepassword);
-var passregex=new RegExp('^$');
 function changepassword()
 {
 	var password=document.querySelector("#password").value; 
 	var retypepwd=document.querySelector("#cnfpassword").value;
 	var randstring=document.querySelector("#randstring").value;  
 	
-	if(passregex.test(password))
+	if(password.length < 6 )
 	  {
-	     document.querySelector("#pwdmsg").innerHTML="Please enter valid password";
-  	     setTimeout(function(){ document.querySelector("#signinerror").innerHTML=""}, 1000);
+	     document.querySelector("#pwdmsg").innerHTML="password should be atleast 6 characters";
+  	     setTimeout(function(){ document.querySelector("#pwdmsg").innerHTML=""}, 4000);
+  	   document.querySelector("#password").classList.add("invalidtextboxes");
+  	     
 		  return false;
 	  }
-	else if(passregex.test(retypepwd))
-	  {
-	     document.querySelector("#pwdmsg").innerHTML="Please enter valid conform password";
-	     setTimeout(function(){ document.querySelector("#signinerror").innerHTML=""}, 1000);
-		  return false;
-	  }
-	else if(password != retypepwd)
+	else if(password != retypepwd) 
 		{
 		document.querySelector("#pwdmsg").innerHTML="Password and Conform password should match";
-	     setTimeout(function(){ document.querySelector("#signinerror").innerHTML=""}, 1000);
+	     setTimeout(function(){ document.querySelector("#pwdmsg").innerHTML=""}, 4000);
+	     document.querySelector("#cnfpassword").classList.add("invalidtextboxes");
 		  return false;
 		}
 	
@@ -55,3 +51,7 @@ function changepassword()
 	xhr.send(requestdata);  
     
 }
+function keypress(id){
+ 	document.querySelector("#"+id).classList.remove("invalidtextboxes");	
+ }
+ 

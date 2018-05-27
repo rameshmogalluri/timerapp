@@ -13,7 +13,6 @@ document.querySelector("#GoogleSigninButton").addEventListener("click",googleoau
 var nameregex=new RegExp('^[a-zA-Z][a-zA-Z0-9\\s]*$');
 var emailregex=new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}$');
 var phoneregex=new RegExp('^[789][0-9]{9}$');
-var passregex=new RegExp('^$');
 
 function register()
  {
@@ -26,14 +25,16 @@ function register()
 	  if(!nameregex.test(name))
 		{
 		  document.querySelector("#signuperror").innerHTML="Please enter valid name";
-		  setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 1000);
+		  setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 3000);
+		  document.querySelector("#name").classList.add("invalidtextboxes");
 		  return false;
 		}
 	 
 	  else if(!emailregex.test(email))
 	  {
 	  document.querySelector("#signuperror").innerHTML="Please enter valid email";
-	  setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 1000);
+	  setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 3000);
+	  document.querySelector("#email").classList.add("invalidtextboxes"); 
 	  return false;
 	  }
 	  else if(phonenumber != "")
@@ -41,17 +42,23 @@ function register()
 	    if(!phoneregex.test(phonenumber))
 	    	{
 	    	 document.querySelector("#signuperror").innerHTML="Please enter valid mobile number";
-	    	 setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 1000);
+	    	 setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 3000);
+	    	 document.querySelector("#mobilenumber").classList.add("invalidtextboxes");
 			  return false;
 	    	}
 	    
 	  }
-	  else if(passregex.test(password))
-		  {
-		     document.querySelector("#signuperror").innerHTML="Please enter valid password";
-	    	 setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 1000);
-			  return false;
-		  }
+			   if(password < 6) 
+				  {
+				    document.querySelector("#signuperror").classList.add("pwderror");
+				    document.querySelector("#signuperror").innerHTML="Password should be minimum 6 characters"; 
+				    setTimeout(function(){  document.querySelector("#signuperror").classList.remove("pwderror"); document.querySelector("#signuperror").innerHTML=""}, 10000);
+				    
+				     document.querySelector("#password").classList.add("invalidtextboxes"); 
+				    
+				    return false;
+				  }
+				  
 	      var requestdata={
 	    	"name":name,
 	    	"email":email,
@@ -91,14 +98,16 @@ function register()
 		var password=document.querySelector("#loginpassword").value;
 		if((!emailregex.test(username)) && (!phoneregex.test(username)))
 		{
-			document.querySelector("#signuperror").innerHTML="Please enter valid Email or Phonenumber";
-			  setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 1000);
+			document.querySelector("#signuperror").innerHTML="Please enter valid Email";
+			  setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 4000);
+			  document.querySelector("#username").classList.add("invalidtextboxes");
 			  return false;
 		}
-		else if(passregex.test(password))
+		else if(password == "")
 		  {
 		     document.querySelector("#signuperror").innerHTML="Please enter valid password";
-	    	 setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 1000);
+	    	 setTimeout(function(){ document.querySelector("#signuperror").innerHTML=""}, 4000);
+	    	 document.querySelector("#loginpassword").classList.add("invalidtextboxes");
 			  return false;
 		  }
 
@@ -137,10 +146,13 @@ function register()
  function googleoauth()
  {
 	url="https://accounts.google.com/o/oauth2/v2/auth?"
-		 +"scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fdrive.metadata.readonly&"
+		 +"scope=https://www.googleapis.com/auth/userinfo.email&"
 		 +"redirect_uri=https://timerapp-204808.appspot.com/signinwithgoogle&"
 		 +"response_type=code&"
-		 +"client_id=280361308016-ebcqotaemi6n5k5gj6rn1fuju5jv9fdg.apps.googleusercontent.com"
+		 +"client_id=280361308016-kmjfvue0neenakoq7oujg1mir75vevld.apps.googleusercontent.com"
 		window.location=url;
+ }
+ function keypress(id){
+ 	document.querySelector("#"+id).classList.remove("invalidtextboxes");	
  }
  
