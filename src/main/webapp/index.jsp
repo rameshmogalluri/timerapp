@@ -41,53 +41,28 @@ if(session.getAttribute("user") != null)
         
        <div class="innerdiv">
        <ul>
+        <li><a data-toggle="tab" href="#signin" id="login">SIGN IN</a></li>
          <li><a data-toggle="tab" href="#signup">SIGN UP</a></li>
-         <li><a data-toggle="tab" href="#signin" id="login">SIGN IN</a></li>
+        
        </ul>
        <br>
         <div class="tab-content">
-    <div id="signup" class="tab-pane fade in active">
-      <h3>SIGNUP</h3>
-      <br> 
-          <div class="form-group">
-            <input type="text" id="name" placeholder="Name*" required name="name">
-         </div>
-          <div class="form-group">
-        
-            <input type="email" id="email" placeholder="Email*" required name="email">
-         </div>
-         <div class="form-group">
-           
-            <input type="tel" pattern="[789][0-9]{9}" title="Please Enter valid Mobile number" id="mobilenumber" placeholder="Mobile Number" name="mobilenumber">
-         </div>
-         <div class="form-group">
-             
-            <input type="text" id="address" placeholder="Address" name="address">
-         </div>
-     <div class="form-group">
-         <input type="password"  id="password" placeholder="Password*" required name="password">
-      </div>
-      
-      <div class="form-group"> 
-       <button type="button"  class="btn buttons" id="register">SIGNUP</button> 
-        <button type="reset"  class="btn buttons" >CLEAR</button>
-      </div>
-       
-    </div>
-    <div id="signin" class="tab-pane fade">
+   
+    <div id="signin" class="tab-pane fade in active">
       <h3>SIGNIN</h3>
       <br>
-    
+    <form>
           <div class="form-group">
-            <input type="email" id="username" placeholder="Email*" required name="username">
+            <input type="email" id="username" placeholder="Email*" required name="username" onkeypress="keypress(this.id)">
          </div>
      <div class="form-group">
-     <input type="password"  id="loginpassword" placeholder="Password*" required name="password">
+     <input type="password"  id="loginpassword" placeholder="Password*" required name="password" onkeypress="keypress(this.id)">
       </div>
             <div class="form-group">
         <button type="button"  class="btn buttons" id="signinbutton">SIGNIN</button> 
         <button type="reset"  class="btn buttons" >CLEAR</button>
       </div>
+     
          <div  class="form-group">
            <a href="forgotpassword.jsp" style="margin-left:20px">Forgot Password?</a>
          </div>
@@ -96,7 +71,37 @@ if(session.getAttribute("user") != null)
         src="google.png" 
 		style="width: 200px; margin-bottom: 12px; height: 46px; border-radius: 44px;"></a> 
        <br>
-       
+      </form> 
+    </div>
+       <div id="signup" class="tab-pane fade">
+      <h3>SIGNUP</h3>
+      <br> 
+      <form>
+          <div class="form-group">
+            <input type="text" id="name" placeholder="Name*" required name="name" onkeypress="keypress(this.id)">
+         </div>
+          <div class="form-group">
+        
+            <input type="email" id="email" placeholder="Email*" required name="email" onkeypress="keypress(this.id)">
+         </div>
+         <div class="form-group">
+           
+            <input type="tel" pattern="[789][0-9]{9}" title="Please Enter valid Mobile number" id="mobilenumber" placeholder="Mobile Number" name="mobilenumber" onkeypress="keypress(this.id)">
+         </div>
+         <div class="form-group">
+             
+            <input type="text" id="address" placeholder="Address" name="address" ">
+         </div>
+     <div class="form-group">
+         <input type="password"  id="password" placeholder="Password*" required name="password" onkeypress="keypress(this.id)">
+         
+      </div>
+      
+      <div class="form-group"> 
+       <button type="button"  class="btn buttons" id="register">SIGNUP</button> 
+        <button type="reset"  class="btn buttons" >CLEAR</button>
+      </div>
+    </form>   
     </div>
   </div>
   </div>

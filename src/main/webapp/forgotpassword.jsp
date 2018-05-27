@@ -20,7 +20,7 @@
            <span>Enter your email address to reset your password</span>
          </div>
          <div class="form-group" style="margin-left:40px">
-            <input type="email" id="email" placeholder="Email" name="email">
+            <input type="email" id="email" placeholder="Email" name="email" onkeypress="keypress(this.id)">
          </div>
          <div class="form-group" style="margin-left:60px"> 
        <button type="button"  class="btn buttons" id="reset">Reset Password</button> 

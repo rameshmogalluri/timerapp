@@ -50,7 +50,7 @@ public class HelloRestEasy {
 	 public static SimpleDateFormat time=new SimpleDateFormat("hh:mm:ss a");
 	 TimeZone timezone = TimeZone.getDefault();
 	
-	// private static Logger logger = Logger.getLogger("com.timer.HelloRestEasy");
+
 
 	@SuppressWarnings("unchecked")
 	@POST
@@ -310,7 +310,7 @@ public class HelloRestEasy {
 	
 	@SuppressWarnings("unchecked")
 	@GET
-	@Path("/clockout/{entryid}")
+	@Path("/clockout/{entryid}")   
 	@Produces("application/json") 
 	public JSONObject clockOut(@PathParam("entryid") String entryid,@Context HttpServletRequest request,@Context HttpServletResponse response)
 	{
@@ -436,7 +436,7 @@ List<Timer> timerInfoList = ofy().load().type(Timer.class).filter("userId", Long
 		    msg.setContent(mp);
 		    msg.setFrom(new InternetAddress("ramesh.subbarao@anywhere.co", "TimerApp.com Admin"));
 		    msg.addRecipient(Message.RecipientType.TO,
-		                   new InternetAddress(usermail, "Mr."+name)); 
+		                   new InternetAddress(usermail, "Mr./ Ms."+name)); 
 		    msg.setSubject("TimerApp - Reset Password "); 
 		   
 		    Transport.send(msg);   

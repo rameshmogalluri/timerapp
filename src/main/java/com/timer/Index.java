@@ -82,14 +82,15 @@ public class Index {
 	{
 		JSONObject result =new JSONObject();
 		
-		String client_id="280361308016-ebcqotaemi6n5k5gj6rn1fuju5jv9fdg.apps.googleusercontent.com"; 
-        String client_secret="GvnTgdIrdBL0i2LUTIb1M5OH";
+		String client_id="280361308016-kmjfvue0neenakoq7oujg1mir75vevld.apps.googleusercontent.com"; 
+        String client_secret="UxzcQ3l6KXlCPl6RZ4Ph0bQz";
         
 		java.net.URI index = new java.net.URI("/index.jsp?signinerror=Invalid%20User");
 		
 		java.net.URI index1 = new java.net.URI("/index.jsp?signinerror=Invalid%20u"); 
 		java.net.URI index3 = new java.net.URI("/index.jsp?signinerror=Your%20account%20is%20deactivated");
 		java.net.URI location = new java.net.URI("/index.jsp");
+		logger.info("OAuth Code :: " + oauthcode );
 
 		if (error != null) {
 			    return Response.temporaryRedirect(index1).build();
@@ -141,10 +142,10 @@ public class Index {
 					logger.info(email);
 					logger.info(results.getEmail()); 
 					
-					if (results == null)
+					if (results != null)
 					{
-						session.invalidate();
-				         return Response.temporaryRedirect(index).build();
+						session.setAttribute("user", results);
+						 return Response.temporaryRedirect(location).build();
 					}
 					else if(!results.getActive())
 					{
@@ -154,11 +155,17 @@ public class Index {
 					}
 					else {
 						
-						session.setAttribute("user", results);
-						 return Response.temporaryRedirect(location).build();
+						
+						 
+						 session.invalidate();
+				         return Response.temporaryRedirect(index).build();
 
 					}
 
+				}
+				else
+				{
+					return Response.temporaryRedirect(index).build();	
 				}
 
 			} 
@@ -168,7 +175,7 @@ public class Index {
 			}
 
 		}
-		return Response.temporaryRedirect(index).build(); 
+		 
 
 	}
 	
