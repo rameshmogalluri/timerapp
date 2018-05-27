@@ -139,13 +139,14 @@ public class Index {
 					Contact results = ofy().load().type(Contact.class).filter("email",email).first().now();
 					HttpSession session =request.getSession();
 					
-					logger.info(email);
-					logger.info(results.getEmail()); 
 					
-					if (results != null)
+					
+					if (results == null)
 					{
-						session.setAttribute("user", results);
-						 return Response.temporaryRedirect(location).build();
+						
+						 session.invalidate();
+				         return Response.temporaryRedirect(index).build();
+						
 					}
 					else if(!results.getActive())
 					{
@@ -155,10 +156,8 @@ public class Index {
 					}
 					else {
 						
-						
-						 
-						 session.invalidate();
-				         return Response.temporaryRedirect(index).build();
+						session.setAttribute("user", results);
+						 return Response.temporaryRedirect(location).build();	
 
 					}
 
