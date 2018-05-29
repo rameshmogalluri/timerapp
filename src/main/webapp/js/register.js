@@ -9,6 +9,8 @@ var error=document.querySelector("#signinerror").textContent.trim();
 document.querySelector("#register").addEventListener("click",register);
 document.querySelector("#signinbutton").addEventListener("click",login);
 document.querySelector("#GoogleSigninButton").addEventListener("click",googleoauth);
+document.querySelector("#GoogleSignupButton").addEventListener("click",googlesignup);
+
 
 var nameregex=new RegExp('^[a-zA-Z][a-zA-Z0-9\\s]*$');
 var emailregex=new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+[.][a-z]{2,4}$');
@@ -155,4 +157,11 @@ function register()
  function keypress(id){
  	document.querySelector("#"+id).classList.remove("invalidtextboxes");	
  }
- 
+  function googlesignup(){
+	  url="https://accounts.google.com/o/oauth2/v2/auth?"
+			 +"scope=https://www.googleapis.com/auth/userinfo.email&"
+			 +"redirect_uri=https://timerapp-204808.appspot.com/googlesignup&"
+			 +"response_type=code&"
+			 +"client_id=280361308016-kmjfvue0neenakoq7oujg1mir75vevld.apps.googleusercontent.com"
+			window.location=url;
+  }

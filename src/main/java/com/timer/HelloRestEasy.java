@@ -72,6 +72,7 @@ public class HelloRestEasy {
 		else
 		{
 			ofy().save().entity(user).now();
+			ofy().clear();
 			HttpSession session=request.getSession();
 			session.setAttribute("user", user); 
 			result.put("Success", true);

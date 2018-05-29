@@ -101,6 +101,10 @@ if(session.getAttribute("user") != null)
        <button type="button"  class="btn buttons" id="register">SIGNUP</button> 
         <button type="reset"  class="btn buttons" >CLEAR</button>
       </div>
+       <a id="GoogleSignupButton" style="cursor: pointer;"><img
+        src="signup-google.png" 
+		style="width: 200px; margin-bottom: 12px; height: 46px; border-radius: 44px;"></a> 
+      
     </form>   
     </div>
   </div>

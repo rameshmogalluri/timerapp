@@ -10,6 +10,7 @@
 </head>
 <body>
    <%
+   
      String rendstring=request.getParameter("randstring"); 
    %>
 <div class="maindiv">
